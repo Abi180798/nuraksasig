@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import NavbarAdmin from '../../layouts/NavbarAdmin'
-import SidebarAdmin from '../../layouts/SidebarAdmin'
-import Content from '../components/Content'
-import FooterAdmin from '../../layouts/FooterAdmin'
+import NavbarAdmin from './NavbarAdmin'
+import SidebarAdmin from './SidebarAdmin'
+import Content from '../dashboard/components/Content'
+import FooterAdmin from './FooterAdmin'
 export default function Layout({
   children,
   title = "",
