@@ -8,7 +8,7 @@ export default function Wisata() {
   })
   return (
     <div>
-      <section className="page-section bg-primary" id="about">
+      <section className="page-section bg-orange" id="about">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8 text-center">
