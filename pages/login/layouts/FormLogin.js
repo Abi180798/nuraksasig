@@ -49,9 +49,14 @@ export default function FormLogin(){
            />
            <small className="label-login-error">{errors.password && touched.password && errors.password}</small>
            <br/>
+           <div>
            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
              Submit
            </button>
+           <button onClick={e=>router.push("/")} className="btn btn-dark float-right" disabled={isSubmitting}>
+             Back
+           </button>
+           </div>
          </form>
        )}
      </Formik>

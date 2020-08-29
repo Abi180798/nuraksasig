@@ -1,4 +1,5 @@
 import '../static/css/styles.css'
+import '../static/css/style.css'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import '../static/styles.scss'
 

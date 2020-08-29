@@ -5,8 +5,8 @@ export default function Login() {
   return (
     <div>
       <Head>
-        <title>Login</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Login-TAHURA NURAKSA</title>
+        <link rel="icon" href="/logo.png" />
       </Head>
       <main id="page-top">
         <section className="page-section bg-dark text-white vh-100">
