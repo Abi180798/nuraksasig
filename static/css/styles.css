@@ -10190,3 +10190,11 @@ header.masthead h1 {
 .input-login{
   width:300px !important;
 }
+
+.label-login{
+  color: black;
+}
+
+.input-wisata{
+  width:100% !important;
+}

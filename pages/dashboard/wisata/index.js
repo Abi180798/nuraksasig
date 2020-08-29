@@ -1,9 +1,19 @@
 import Layout from "../../layouts/Layout";
+import ListWisata from "./components/ListWisata";
 
 export default function WisataAdmin() {
-    return(
+    return (
         <Layout title="Wisata">
-            Wisata
+            <main>
+                <div className="container-fluid">
+                    <h1 className="mt-4">Daftar Wisata</h1>
+                    <ol className="breadcrumb mb-4">
+                        <li className="breadcrumb-item">Manajemen Data</li>
+                        <li class="breadcrumb-item active" aria-current="page">Wisata</li>
+                    </ol>
+                    <ListWisata />
+                </div>
+            </main>
         </Layout>
     )
 }
