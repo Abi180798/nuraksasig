@@ -10,11 +10,11 @@ export default function Kontak() {
       </div>
       <div className="row">
         <div className="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-          <i className="fas fa-phone fa-3x mb-3 text-muted"></i>
+          <i className="fas fa-phone fa-3x mb-3 text-muted logo-kontak"></i>
           <div>087755906130</div>
         </div>
         <div className="col-lg-4 mr-auto text-center">
-          <i className="fas fa-envelope fa-3x mb-3 text-muted"></i>
+          <i className="fas fa-envelope fa-3x mb-3 text-muted logo-kontak"></i>
           <a className="d-block" href="google.com">habiburrahman180798@gmail.com</a>
         </div>
       </div>

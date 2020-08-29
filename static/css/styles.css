@@ -10165,6 +10165,10 @@ header.masthead h1 {
   color: rgba(255, 255, 255, 0.75);
 }
 
+.logo-kontak{
+  width: 50px;
+}
+
 .container-login{
   width: auto;
   display: flex;
