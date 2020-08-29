@@ -2,14 +2,17 @@ import { Formik } from 'formik'
 import { useRouter } from 'next/router'
 export default function FormWisata({dataWisata}) {
   const router = useRouter()
-  const data_wisata = dataWisata.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)
+  // console.log("taek",dataWisata&&dataWisata.nama_wisata)
+  // const data_wisata = dataWisata.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)
   return (
+    dataWisata===undefined?"":
     <Formik
-      initialValues={{ nama_wisata: data_wisata[0].nama_wisata||'',
-       alamat_wisata: data_wisata[0].alamat_wisata||'',
-       deskripsi_alamat:data_wisata[0].deskripsi_alamat||'',
-       latitude:data_wisata[0].location.lat||'',
-       longitude:data_wisata[0].location.lng||''
+      initialValues={{ 
+        nama_wisata: dataWisata.nama_wisata||'',
+       alamat_wisata: dataWisata.alamat_wisata||'',
+       deskripsi_alamat:dataWisata.deskripsi_alamat||'',
+       latitude:dataWisata.location.lat||'',
+       longitude:dataWisata.location.lng||''
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {

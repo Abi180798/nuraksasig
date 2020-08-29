@@ -2,12 +2,19 @@ import React,{useState,useEffect} from 'react'
 import Link from 'next/link'
 
 export default function SidebarAdmin({title}) {
-    console.log("sides",title)
+    const [state,setState] = useState(false)
     useEffect(() => {
         const linkActive = document.getElementById(`link${title}`)
         console.log("eff", linkActive.innerText)
         linkActive.classList.add("active")
-    }, [])
+
+        const menuside = document.getElementById("collapseLayouts")
+        if(state===true){
+            menuside.classList.add("show")
+        }else{
+            menuside.classList.remove("show")
+        }
+    }, [state])
     return(
         <div id="layoutSidenav_nav">
                 <nav className="sb-sidenav accordion sb-sidenav-dark collapse navbar-collapse" id="sidenavAccordion">
@@ -21,7 +28,8 @@ export default function SidebarAdmin({title}) {
                             </a>
                             </Link>
                             <div className="sb-sidenav-menu-heading">Interface</div>
-                            <a className="nav-link collapsed" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a className="nav-link collapsed" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
+                            onClick={e=>setState(!state)}>
                                 <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
                                 Manajemen Data
                                 <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>

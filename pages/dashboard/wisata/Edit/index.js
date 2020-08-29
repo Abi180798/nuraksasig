@@ -1,8 +1,11 @@
 import Layout from "../../../layouts/Layout";
 import FormWisata from "../components/FormWisata";
 import dataWisata from '../../../../mock/wisata.json'
+import { useRouter } from 'next/router'
 
 export default function Edit(){
+    const router = useRouter()
+
     return(
         <Layout title="Wisata">
             <main>
@@ -15,7 +18,7 @@ export default function Edit(){
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
-                    <FormWisata dataWisata={dataWisata.data}/>
+                    <FormWisata dataWisata={dataWisata.data.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)[0]}/>
                         </div>
                     </div>
                 </div>
