@@ -4,8 +4,7 @@ import NavbarAdmin from '../layouts/NavbarAdmin'
 import SidebarAdmin from '../layouts/SidebarAdmin'
 import Content from './components/Content'
 import FooterAdmin from '../layouts/FooterAdmin'
-import Layout from './layouts/layout'
-
+import Layout from '../layouts/Layout'
 function Dashboard(){
     return(
         <Layout title="Dashboard">
