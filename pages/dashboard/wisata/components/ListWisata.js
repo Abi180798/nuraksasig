@@ -25,13 +25,13 @@ export default function ListWisata() {
                     <div className="row justify-content-center inline-block">
                       <div className="text-center m-1">
                         <Link prefetch href={`/dashboard/wisata/details?id_wisata=${row.id_wisata}`}
-                        as={`/dashboard/wisata/details?id_wisata=${row.id_wisata}`}>
+                        as={`/dashboard/wisata/details/${row.id_wisata}`}>
                         <a className="btn btn-success btn-sm">Detail</a>
                         </Link>
                       </div>
                       <div className="text-center m-1">
                         <Link prefetch href={`/dashboard/wisata/edits?id_wisata=${row.id_wisata}`}
-                        as={`/dashboard/wisata/edits?id_wisata=${row.id_wisata}`}>
+                        as={`/dashboard/wisata/edits/${row.id_wisata}`}>
                         <a className="w- btn btn-warning btn-sm">Edit</a>
                         </Link>
                       </div>

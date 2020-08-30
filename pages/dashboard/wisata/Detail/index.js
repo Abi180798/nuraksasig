@@ -1,7 +1,7 @@
 import Layout from "../../../layouts/Layout";
 import FormWisata from "../components/FormWisata";
 import dataWisata from '../../../../mock/wisata.json'
-import { useRouter } from 'next/router'
+import { useRouter } from './node_modules/next/router'
 
 export default function Detail(){
     const router = useRouter()
