@@ -13,8 +13,8 @@ export default function Edit(){
                     <h1 className="mt-4">Edit Wisata</h1>
                     <ol className="breadcrumb mb-4">
                         <li className="breadcrumb-item">Manajemen Data</li>
-                        <li class="breadcrumb-item">Wisata</li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                        <li className="breadcrumb-item">Wisata</li>
+                        <li className="breadcrumb-item active" aria-current="page">Edit</li>
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">

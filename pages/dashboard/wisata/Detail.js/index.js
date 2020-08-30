@@ -13,8 +13,8 @@ export default function Detail(){
                     <h1 className="mt-4">Detail Wisata</h1>
                     <ol className="breadcrumb mb-4">
                         <li className="breadcrumb-item">Manajemen Data</li>
-                        <li class="breadcrumb-item">Wisata</li>
-                        <li class="breadcrumb-item active" aria-current="page">Detail</li>
+                        <li className="breadcrumb-item">Wisata</li>
+                        <li className="breadcrumb-item active" aria-current="page">Detail</li>
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
