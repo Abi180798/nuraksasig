@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {useMediaQuery} from 'react-responsive'
 import Link from 'next/link'
+import store from 'store'
 
 export default function NavbarAdmin(){
     const isTabletOrMobile = useMediaQuery({ maxWidth: 991 })
@@ -32,8 +33,8 @@ export default function NavbarAdmin(){
             content_margin.style.marginLeft = "-225px"
             side_transform.style.transform = "translateX(-225)"
         }
-        console.log("stat",state.statsNav)
-        console.log("ismo",isTabletOrMobile)
+        // console.log("stat",state.statsNav)
+        // console.log("ismo",isTabletOrMobile)
     }, [state.statsNav,isTabletOrMobile])
     return(
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -57,7 +58,7 @@ export default function NavbarAdmin(){
                         <a className="dropdown-item" href="#">Activity Log</a>
                         <div className="dropdown-divider"></div> */}
                         <Link href="/">
-                        <a className="dropdown-item">Logout</a>
+                        <a className="dropdown-item" onClick={e=>store.remove("token")}>Logout</a>
                         </Link>
                     </div>
                 </li>

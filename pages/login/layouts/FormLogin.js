@@ -1,5 +1,6 @@
 import {Formik} from 'formik'
 import { useRouter } from 'next/router'
+import store from 'store'
 export default function FormLogin(){
     const router = useRouter()
     return(
@@ -7,7 +8,12 @@ export default function FormLogin(){
        initialValues={{ username: '', password: '' }}
        onSubmit={(values, { setSubmitting }) => {
          setTimeout(() => {
-           if(values.username==="admin"&&values.password==="123"){
+           if(values.username==="admin"&&values.password==="123"||values.username==="superadmin"&&values.password==="123"){
+              if(values.username==="admin"&&values.password==="123"){
+                store.set("token","admin")
+              }else if(values.username==="superadmin"&&values.password==="123"){
+                store.set("token","superadmin")
+              }
                router.push('/dashboard')
            }else{
                alert("Username atau password anda salah!")

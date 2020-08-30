@@ -5,18 +5,24 @@ export default function FormWisata({dataWisata}) {
   // console.log("taek",dataWisata&&dataWisata.nama_wisata)
   // const data_wisata = dataWisata.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)
   return (
-    dataWisata===undefined?"":
+    // dataWisata===undefined?"":
     <Formik
       initialValues={{ 
-        nama_wisata: dataWisata.nama_wisata||'',
-       alamat_wisata: dataWisata.alamat_wisata||'',
-       deskripsi_alamat:dataWisata.deskripsi_alamat||'',
-       latitude:dataWisata.location.lat||'',
-       longitude:dataWisata.location.lng||''
+        nama_wisata: dataWisata&&dataWisata.nama_wisata||'',
+       alamat_wisata: dataWisata&&dataWisata.alamat_wisata||'',
+       deskripsi_alamat:dataWisata&&dataWisata.deskripsi_alamat||'',
+       latitude:dataWisata&&dataWisata.location.lat||'',
+       longitude:dataWisata&&dataWisata.location.lng||''
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
+          if(router.pathname.split("/")[3]==="addz"){
+            console.log("add")
+          }else if(router.pathname.split("/")[3]==="editz"){
+            console.log("edit")
+          }
           alert(JSON.stringify(values))
+          
           // if (values.username === "admin" && values.password === "123") {
           //   router.push('/dashboard')
           // } else {
@@ -99,33 +105,35 @@ export default function FormWisata({dataWisata}) {
                 <div className="row">
                   <div className="col-xl-6">
                 <input
-                  className="form-control input-wisata"
+                  className="form-control input-wisata mt-1"
                   placeholder="Masukkan Latitude"
                   type="text"
                   name="latitude"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.latitude}
-                />
+                /><br/>
+                    <small className="label-login-error">{errors.latitude && touched.latitude && errors.latitude}</small>
                   </div>
                   <div className="col-xl-6">
                 <input
-                  className="form-control input-wisata"
+                  className="form-control input-wisata mt-1"
                   placeholder="Masukkan Longitude"
                   type="text"
                   name="longitude"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.longitude}
-                />
+                /><br/>
+              <small className="label-login-error">{errors.latitude && touched.latitude && errors.latitude}</small>
                   </div>
                 </div>
               </div>
-              <small className="label-login-error">{errors.deskripsi_alamat && touched.deskripsi_alamat && errors.deskripsi_alamat}</small>
               </div>
             <br />
             <div>
-              {router.pathname.split("/")[3]!=="detail"&&
+              {console.log("router",router.pathname)}
+              {router.pathname.split("/")[3]!=="detailz"&&
               <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
                 Submit
            </button>
