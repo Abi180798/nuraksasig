@@ -6,13 +6,16 @@ import store from 'store'
 export default function NavbarAdmin(){
     const isTabletOrMobile = useMediaQuery({ maxWidth: 991 })
     const [state,setState] = useState({
-        statsNav: true
+        statsNav: true,
+        navStats: false,
     })
     useEffect(() => {
         const toggle = document.getElementById("sidenavAccordion")
         const btn_toggle = document.getElementById("sidebarToggle")
         const side_transform = document.getElementById("layoutSidenav_nav")
         const content_margin = document.getElementById("layoutSidenav_content")
+        const dropd = document.getElementById("dropd-nav")
+        const dropds = document.getElementById("dropd-navs")
         if(state.statsNav===false&&isTabletOrMobile===true){
             toggle.classList.remove("show")
             btn_toggle.classList.remove("collapsed")
@@ -33,9 +36,16 @@ export default function NavbarAdmin(){
             content_margin.style.marginLeft = "-225px"
             side_transform.style.transform = "translateX(-225)"
         }
-        // console.log("stat",state.statsNav)
+        if(state.navStats===true){
+            dropd.classList.add("show")
+            dropds.classList.add("show")
+        }else{
+            dropd.classList.remove("show")
+            dropds.classList.remove("show")
+        }
+        // console.log("navstat",state.navStats)
         // console.log("ismo",isTabletOrMobile)
-    }, [state.statsNav,isTabletOrMobile])
+    }, [state.statsNav,state.navStats,isTabletOrMobile])
     return(
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a className="navbar-brand" href="index.html">TAHURA Nuraksa</a>
@@ -51,9 +61,11 @@ export default function NavbarAdmin(){
                 </div>
             </form>
             <ul className="navbar-nav ml-auto ml-md-0">
-                <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fas fa-user fa-fw"></i></a>
-                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <li className="nav-item dropdown" id="dropd-nav">
+                    <a className="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    onClick={e=>setState({...state,navStats:!state.navStats})}>
+                        <i className="fas fa-user fa-fw"></i></a>
+                    <div className="dropdown-menu dropdown-menu-right" id="dropd-navs" aria-labelledby="userDropdown">
                         {/* <a className="dropdown-item" href="#">Settings</a> */}
                         <Link href="/">
                         <a className="dropdown-item">Landing Page</a>

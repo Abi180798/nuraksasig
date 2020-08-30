@@ -8,10 +8,9 @@ import Wisata from './components/Wisata'
 import Event from './components/Event'
 import Kontak from './components/Kontak'
 
-function Home({events}) {
+function Home() {
     return (
         <div>
-        {console.log("pro",events)}
       <Head>
         <title>Home-TAHURA NURAKSA</title>
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossOrigin="anonymous"></script>

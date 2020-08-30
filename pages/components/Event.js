@@ -30,9 +30,8 @@ export default function Event() {
       <div id="portfolio">
         <div className="container-fluid p-0">
           <div className="row no-gutters">
-            {events.data&&events.data.event.slice(0,state.length).map((r)=>console.log(r))}
-            {events.data&&events.data.event.slice(0,state.length).map((row)=>(
-            <div className="col-lg-4 col-sm-6">
+            {events.data&&events.data.event.slice(0,state.length).map((row,index)=>(
+            <div className="col-lg-4 col-sm-6" key={index}>
               <a className="portfolio-box" href="../static/assets/img/portfolio/fullsize/1.jpg">
                 <img className="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                 <div className="portfolio-box-caption">
