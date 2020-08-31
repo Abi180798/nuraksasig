@@ -48,15 +48,17 @@ export default function NavbarAdmin(){
     }, [state.statsNav,state.navStats,isTabletOrMobile])
     return(
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a className="navbar-brand" href="index.html">TAHURA Nuraksa</a>
+            <Link href="/dashboard">
+            <a className="navbar-brand">TAHURA Nuraksa</a>
+            </Link>
             <button className="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" 
             onClick={e=>setState({...state,statsNav:!state.statsNav})}>
-                <i className="fas fa-bars"></i></button>
+                <i className="fas fa-bars white"></i></button>
             <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div className="input-group">
                     <input className="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div className="input-group-append">
-                        <button className="btn btn-primary" type="button"><i className="fas fa-search"></i></button>
+                        <button className="btn btn-primary" type="button"><i className="fas fa-search white"></i></button>
                     </div>
                 </div>
             </form>
@@ -64,7 +66,7 @@ export default function NavbarAdmin(){
                 <li className="nav-item dropdown" id="dropd-nav">
                     <a className="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                     onClick={e=>setState({...state,navStats:!state.navStats})}>
-                        <i className="fas fa-user fa-fw"></i></a>
+                        <i className="fas fa-user fa-fw white"></i></a>
                     <div className="dropdown-menu dropdown-menu-right" id="dropd-navs" aria-labelledby="userDropdown">
                         {/* <a className="dropdown-item" href="#">Settings</a> */}
                         <Link href="/">

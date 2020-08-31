@@ -1,3 +1,4 @@
+import React,{useEffect} from 'react'
 import dataWisata from '../../../../mock/wisata.json'
 import Link from 'next/link'
 import {popUpAlert, popUpAlertEvent} from '../../../../utils/popup'
@@ -5,27 +6,32 @@ import ShowAlert from '../../../../utils/notification'
 import {useRouter} from 'next/router'
 
 export default function ListEvent({events}) {
-  console.log("eventsss",events)
   const router = useRouter()
+  useEffect(()=>{
+    $('#dataTable').dataTable( {
+      "pagingType": "full_numbers"
+    } );
+  },[events])
   return (
     <div className="card mb-4">
       <div>
-        <div className="mr-4 mt-2">
+      </div>
+      <div className="card-body">
+        <div className="table-responsive">
+        <div className="mr-0 mt-0">
           <Link href="/dashboard/event/addz">
-          <a className="btn btn-primary float-right">
+          <a className="btn btn-primary float-right mt-3">
             Tambah Data
             </a>
           </Link>
             </div>
-      </div>
-      <div className="card-body">
-        <div className="table-responsive">
+            {events&&
           <table className="table table-bordered" id="dataTable" width="100%" cellSpacing="0">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Nama Event</th>
-                <th className="text-center">Lokasi Event<br/>(Latitude,Longitude)</th>
+                <th className="text-center">Lokasi Event</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -62,6 +68,7 @@ export default function ListEvent({events}) {
               ))}
             </tbody>
           </table>
+}
         </div>
       </div>
     </div>

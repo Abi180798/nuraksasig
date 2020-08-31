@@ -10198,3 +10198,12 @@ header.masthead h1 {
 .input-wisata{
   width:100% !important;
 }
+
+#dataTable_filter label {
+  width:75%;
+  float: right;
+}
+
+.pagination{
+  float: right;
+}

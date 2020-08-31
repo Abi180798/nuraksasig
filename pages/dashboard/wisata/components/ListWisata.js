@@ -1,3 +1,4 @@
+import React,{useEffect} from 'react'
 import dataWisata from '../../../../mock/wisata.json'
 import Link from 'next/link'
 import {popUpAlert, popUpAlertEvent} from '../../../../utils/popup'
@@ -6,19 +7,25 @@ import {useRouter} from 'next/router'
 
 export default function ListWisata() {
   const router = useRouter()
+
+  useEffect(()=>{
+    $('#dataTable').dataTable( {
+      "pagingType": "full_numbers"
+    } );
+  },[])
   return (
     <div className="card mb-4">
       <div>
-        <div className="mr-4 mt-2">
+      </div>
+      <div className="card-body">
+        <div className="table-responsive">
+        <div className="mr-0 mt-0">
           <Link href="/dashboard/wisata/addz">
-          <a className="btn btn-primary float-right">
+          <a className="btn btn-primary float-right mt-3">
             Tambah Data
             </a>
           </Link>
             </div>
-      </div>
-      <div className="card-body">
-        <div className="table-responsive">
           <table className="table table-bordered" id="dataTable" width="100%" cellSpacing="0">
             <thead>
               <tr>
