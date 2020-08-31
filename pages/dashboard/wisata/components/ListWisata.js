@@ -7,12 +7,6 @@ import {useRouter} from 'next/router'
 
 export default function ListWisata() {
   const router = useRouter()
-
-  useEffect(()=>{
-    $('#dataTable').dataTable( {
-      "pagingType": "full_numbers"
-    } );
-  },[])
   return (
     <div className="card mb-4">
       <div>
