@@ -22,9 +22,8 @@ function Dashboard(){
       }, [])
     return(
         <Layout title="Dashboard">
-            {console.log(events)}
-            {events&&
-            <Content events={events}/>
+            {events.data&&
+            <Content events={events.data}/>
             }
         </Layout>
     )
