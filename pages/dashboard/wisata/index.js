@@ -9,7 +9,7 @@ export default function WisataAdmin() {
                     <h1 className="mt-4">Daftar Wisata</h1>
                     <ol className="breadcrumb mb-4">
                         <li className="breadcrumb-item">Manajemen Data</li>
-                        <li class="breadcrumb-item active" aria-current="page">Wisata</li>
+                        <li className="breadcrumb-item active" aria-current="page">Wisata</li>
                     </ol>
                     <ListWisata />
                 </div>

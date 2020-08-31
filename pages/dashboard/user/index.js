@@ -9,7 +9,7 @@ export default function UserAdmin() {
           <h1 className="mt-4">Daftar User</h1>
           <ol className="breadcrumb mb-4">
             <li className="breadcrumb-item">Manajemen Data</li>
-            <li class="breadcrumb-item active" aria-current="page">User</li>
+            <li className="breadcrumb-item active" aria-current="page">User</li>
           </ol>
           <ListUser />
         </div>

@@ -3,9 +3,7 @@ import Link from 'next/link'
 import store from 'store'
 
 export default function SidebarAdmin({ title }) {
-  const [state, setState] = useState({
-    stat:false
-  })
+  const [state, setState] = useState(false)
   useEffect(() => {
     const linkActive = document.getElementById(`link${title}`)
     // console.log("eff", linkActive.innerText)
@@ -18,12 +16,13 @@ export default function SidebarAdmin({ title }) {
     }
 
     const menuside = document.getElementById("collapseLayouts")
-    if (state.stat === true) {
+    if (state === true) {
       menuside.classList.add("show")
     } else {
       menuside.classList.remove("show")
     }
-  }, [state.stat])
+    console.log(state)
+  }, [state])
   return (
     <div id="layoutSidenav_nav">
       <nav className="sb-sidenav accordion sb-sidenav-dark collapse navbar-collapse" id="sidenavAccordion">
@@ -38,7 +37,7 @@ export default function SidebarAdmin({ title }) {
             </Link>
             <div className="sb-sidenav-menu-heading">Interface</div>
             <a className="nav-link collapsed" id="linkManaj" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
-              onClick={e => setState({...state,stat:!state})}>
+              onClick={e => setState(!state)}>
               <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
                                 Manajemen Data
                                 <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>

@@ -36,6 +36,7 @@ export default function FormLogin(){
              <label className="label-login">Username</label>
            <input
             className="form-control input-login"
+            autoFocus
              type="text"
              name="username"
              onChange={handleChange}
