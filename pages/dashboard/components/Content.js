@@ -28,7 +28,7 @@ export default function Content({ events }) {
           <div className="col-xl-6 col-md-6">
             <div className="card bg-success text-white mb-4">
               <div className="card-header">Jumlah Data Event</div>
-              <div className="card-body text-center" style={{ fontSize: 50, fontWeight: "bold" }}>{events.data && events.data.event.length}</div>
+              <div className="card-body text-center" style={{ fontSize: 50, fontWeight: "bold" }}>{events && events.data.event.length}</div>
               <div className="card-footer d-flex align-items-center justify-content-between">
                 <Link href="/dashboard/event">
                   <a className="small text-white stretched-link">View Details</a>

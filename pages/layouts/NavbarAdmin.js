@@ -55,12 +55,12 @@ export default function NavbarAdmin(){
             onClick={e=>setState({...state,statsNav:!state.statsNav})}>
                 <i className="fas fa-bars white"></i></button>
             <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-                <div className="input-group">
+                {/* <div className="input-group">
                     <input className="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div className="input-group-append">
                         <button className="btn btn-primary" type="button"><i className="fas fa-search white"></i></button>
                     </div>
-                </div>
+                </div> */}
             </form>
             <ul className="navbar-nav ml-auto ml-md-0">
                 <li className="nav-item dropdown" id="dropd-nav">
