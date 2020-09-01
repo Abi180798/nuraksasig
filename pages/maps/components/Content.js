@@ -6,6 +6,8 @@ import {useMediaQuery} from 'react-responsive'
 import Link from 'next/link';
 
 export default function Content(){
+    const isMobile = useMediaQuery({ query: '(max-width: 530px)' })
+
     const [state, setState] = useState({
         cLocation:null,
         pLocation:null,
@@ -52,7 +54,7 @@ export default function Content(){
                 <CurrentLocation getLocation={getLocation} location={state.cLocation}/>
                     </div>
                     
-                    <div className="float-right mr-3 w-50">
+                    <div className={`float-right mr-3 ${isMobile?`w-75`:`w-25`}`} >
                         {dataWisata&&
                         <select className="form-control" value={state.pLocation} onChange={e=>setState({...state,pLocation:e.currentTarget.value})}>
                             <option selected>Pilih Wisata</option>

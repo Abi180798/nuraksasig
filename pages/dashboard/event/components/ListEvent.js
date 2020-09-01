@@ -9,7 +9,7 @@ export default function ListEvent({events}) {
   const router = useRouter()
   useEffect(()=>{
     $('#dataTable').dataTable( {
-      "pagingType": "full_numbers"
+      "pagingType": "simple_numbers"
     } );
   },[events])
   return (

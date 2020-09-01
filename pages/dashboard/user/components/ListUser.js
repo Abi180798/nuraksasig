@@ -9,7 +9,7 @@ export default function ListUser() {
   const router = useRouter()
   useEffect(()=>{
     $('#dataTable').dataTable( {
-      "pagingType": "full_numbers"
+      "pagingType": "simple_numbers"
     } );
   },[])
   return (

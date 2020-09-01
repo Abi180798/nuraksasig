@@ -9,7 +9,7 @@ const containerStyle = {
   height: '70%'
 }
 export const TahuraMaps = (props) => {
-  const isMobile = useMediaQuery({ query: '(max-width: 530px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 528px)' })
 
   const [state, setState] = useState({
     showingInfoWindow: false,

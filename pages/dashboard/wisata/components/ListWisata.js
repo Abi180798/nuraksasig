@@ -4,12 +4,13 @@ import Link from 'next/link'
 import {popUpAlert, popUpAlertEvent} from '../../../../utils/popup'
 import ShowAlert from '../../../../utils/notification'
 import {useRouter} from 'next/router'
+import {useMediaQuery} from 'react-responsive'
 
 export default function ListWisata() {
   const router = useRouter()
   useEffect(()=>{
     $('#dataTable').dataTable( {
-      "pagingType": "full_numbers"
+      "pagingType": "simple_numbers"
     } );
   },[])
   return (
