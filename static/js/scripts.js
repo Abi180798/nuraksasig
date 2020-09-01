@@ -62,6 +62,3 @@
 
 })(jQuery); // End of use strict
 
-$('#dataTable').dataTable( {
-  "pagingType": "full_numbers"
-} );

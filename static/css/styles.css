@@ -10207,3 +10207,7 @@ header.masthead h1 {
 .pagination{
   float: right;
 }
+
+.icon-onprofil{
+  width: 16 !important;
+}

@@ -8,6 +8,9 @@ import {useRouter} from 'next/router'
 export default function ListEvent({events}) {
   const router = useRouter()
   useEffect(()=>{
+    $('#dataTable').dataTable( {
+      "pagingType": "full_numbers"
+    } );
   },[events])
   return (
     <div className="card mb-4">
