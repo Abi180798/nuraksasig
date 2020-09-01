@@ -4,7 +4,7 @@ export default function Content(){
             <div className="pl-5 pr-5">
                 <div className="mt-5 card card-body" style={{height:"75vh"}}>
                     <div className="card-header">
-                    <h2>About Us</h2>
+                    <b style={{fontSize:40}}>About Us</b>
                     </div>
                     <div className="card-body">
                 Sistem Informasi Geografis V1
