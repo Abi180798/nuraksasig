@@ -12,6 +12,7 @@ export default function Layout({
     <div>
       <Head>
         <title>{title}-TAHURA NURAKSA</title>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="icon" href="/logo.png" />
       </Head>
       <main className="sb-nav-fixed">
