@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {useMediaQuery} from 'react-responsive'
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 const dataWisata = require("../../../mock/wisata.json")
@@ -8,6 +9,8 @@ const containerStyle = {
   height: '70%'
 }
 export const TahuraMaps = (props) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 530px)' })
+
   const [state, setState] = useState({
     showingInfoWindow: false,
     activeMarker: {},
@@ -28,7 +31,6 @@ export const TahuraMaps = (props) => {
       })
     }
   }
-  console.log(props.centering)
   return (
     <div style={{display:"flex", justifyContent:"center"}}>
     <Map google={props.google} zoom={18}
@@ -37,7 +39,12 @@ export const TahuraMaps = (props) => {
         lng: 116.283235,
       }}
       center={props.dataFilter?props.dataFilter:props.cLocation?props.cLocation:props.pLocation&&props.pLocation}
-      containerStyle={containerStyle}
+      containerStyle={
+        {
+          width: '92%',
+          height: isMobile?'55%':'70%'
+        }
+      }
       onClick={onMapClicked}
     >
       {dataWisata.data.map((row,index) => (

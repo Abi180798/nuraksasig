@@ -2,13 +2,15 @@ import React,{useState,useEffect} from 'react'
 import TahuraMaps from "./TahuraMaps";
 import CurrentLocation from "./CurrentLocation"
 import dataWisata from '../../../mock/wisata.json'
+import {useMediaQuery} from 'react-responsive'
 import Link from 'next/link';
 
 export default function Content(){
     const [state, setState] = useState({
         cLocation:null,
         pLocation:null,
-        dataFilter:null
+        dataFilter:null,
+        tLocation:null
     })
     function getLocation(value){
         setState({
@@ -31,7 +33,13 @@ export default function Content(){
         // })
         // }
         setSelected()
-        },[state.cLocation,state.pLocation,state.dataFilter])
+            if(state.dataFilter){
+                setState({
+                    ...state,
+                    tLocation:state.dataFilter&&state.dataFilter.location
+                })
+            }
+        },[state.cLocation,state.pLocation,state.dataFilter,state.tLocation])
     // console.log(dataWisata.data.filter((row)=>row.id_wisata===state.pLocation)[0])
     return(
         <header className="masthead">
@@ -44,7 +52,7 @@ export default function Content(){
                 <CurrentLocation getLocation={getLocation} location={state.cLocation}/>
                     </div>
                     
-                    <div className="float-right mr-3 w-25">
+                    <div className="float-right mr-3 w-50">
                         {dataWisata&&
                         <select className="form-control" value={state.pLocation} onChange={e=>setState({...state,pLocation:e.currentTarget.value})}>
                             <option selected>Pilih Wisata</option>
@@ -55,11 +63,14 @@ export default function Content(){
                         }
                     </div>
                     <div className="float-right">
-                        {state.cLocation&&
-                        <Link href={`https://www.google.com/maps/dir//${state.cLocation.lat},${state.cLocation.lng}/@-8.5813491,116.099786,17z`}>
+                        {state.cLocation&&state.dataFilter&&state.tLocation&&
+                        <Link href={`https://www.google.com/maps/dir/${state.cLocation.lat},${state.cLocation.lng}/${state.tLocation.lat},${state.tLocation.lng}/@${state.tLocation.lat},${state.tLocation.lng}/`}>
                         <a className="btn btn-success mr-3">Berangkat</a>
                         </Link>
                         }
+                        {/* {console.log("clo",state.cLocation&&state.cLocation)}
+                        {console.log("plo",state.dataFilter&&state.dataFilter.location)}
+                        {console.log("tlo",state.tLocation&&state.tLocation)} */}
                     </div>
                     </div>
                     <div className="card-body">
