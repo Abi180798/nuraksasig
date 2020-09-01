@@ -15,10 +15,10 @@ export default function Content() {
                       <b style={{fontSize:40}}>{row.nama_lengkap}
                       </b>
                     <p className="text-muted" style={{fontSize:18}}>{row.alamat}{' '}
-                      <i class="fa fa-map-marker icon-onprofil"></i>
+                      <i class="fa fa-map-marker icon-onprofil" style={{width:16}}></i>
                     </p>
-                    <div><i class="fa fa-user icon-onprofil"></i>{' '}{row.username}</div>
-                    <div><i class="fa fa-phone icon-onprofil"></i>{' '}{row.no_hp}</div>
+                    <div><i class="fa fa-user icon-onprofil" style={{width:16}}></i>{' '}{row.username}</div>
+                    <div><i class="fa fa-phone icon-onprofil" style={{width:16}}></i>{' '}{row.no_hp}</div>
                     <div>Sebagai: {row.role}</div>
                     <br/><br/><br/><br/><br/>
                     <div>
