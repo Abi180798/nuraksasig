@@ -3,9 +3,8 @@ import FormUser from "../components/FormUser";
 import dataUser from '../../../../mock/user.json'
 import { useRouter } from 'next/router'
 
-export default function Editz(){
+export default function Detailz(){
     const router = useRouter()
-
     return(
         <Layout title="User">
             <main>

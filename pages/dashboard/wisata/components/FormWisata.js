@@ -1,11 +1,13 @@
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import dataWisatas from '../../../../mock/wisata.json'
 export default function FormWisata({dataWisata}) {
   const router = useRouter()
   // console.log("taek",dataWisata&&dataWisata.nama_wisata)
   // const data_wisata = dataWisata.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)
   return (
-    // dataWisata===undefined?"":
+    // !dataWisata?"":
     <Formik
       initialValues={{ 
         nama_wisata: dataWisata&&dataWisata.nama_wisata||'',
@@ -132,7 +134,6 @@ export default function FormWisata({dataWisata}) {
               </div>
             <br />
             <div>
-              {console.log("router",router.pathname)}
               {router.pathname.split("/")[3]!=="detailz"&&
               <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
                 Submit

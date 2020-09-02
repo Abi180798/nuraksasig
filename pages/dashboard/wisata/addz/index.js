@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 export default function Addz(){
     const router = useRouter()
-
+    console.log(dataWisata)
     return(
         <Layout title="Wisata">
             <main>
