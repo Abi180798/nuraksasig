@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import moment from 'moment'
 import {EventAPI} from '../api/EventAPI'
-import {Convert} from '../utils/convert'
+import {Convert} from '../../utils/convert'
 
 export default function Event() {
   const [state, setState] = useState({
