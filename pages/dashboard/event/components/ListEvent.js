@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import Link from 'next/link'
 import { notifyPosition, notifyType, ShowNotify } from '../../../../utils/notification'
 import {useRouter} from 'next/router'
-import { getDateTimeArrayIndo } from '../../../utils'
+import {Convert} from '../../../../utils/convert'
 import { EventAPI } from '../../../api/EventAPI'
 import Swal from 'sweetalert2'
 import Loading from '../../../utils/Loading'
@@ -83,7 +83,7 @@ export default function ListEvent({events}) {
                 <tr key={index}>
                   <td className="text-center">{index + 1}</td>
                   <td>{row.judul_event}</td>
-                  <td>{getDateTimeArrayIndo(row.tanggal_event)}</td>
+                  <td>{Convert.getDateTimeArrayIndo(row.tanggal_event)}</td>
                   <td >
                     <div className="row justify-content-center inline-block">
                       <div className="text-center m-1">
