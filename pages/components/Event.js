@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import moment from 'moment'
 import {EventAPI} from '../api/EventAPI'
-import { getDateTimeArrayIndo } from '../utils'
+import { getDateTimeArrayIndo } from '../utils/convert'
 
 export default function Event() {
   const [state, setState] = useState({
