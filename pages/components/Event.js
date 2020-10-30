@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import moment from 'moment'
 import {EventAPI} from '../api/EventAPI'
-import { getDateTimeArrayIndo } from '../utils/convert'
+import {Convert} from '../utils/convert'
 
 export default function Event() {
   const [state, setState] = useState({
@@ -38,7 +38,7 @@ export default function Event() {
                 <img className="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                 <div className="portfolio-box-caption">
                   <div className="project-category text-white-50">{row.judul_event}</div>
-            <div className="project-name">{row.deskripsi_event}<br/>{getDateTimeArrayIndo(row.tanggal_event)}</div>
+            <div className="project-name">{row.deskripsi_event}<br/>{Convert.getDateTimeArrayIndo(row.tanggal_event)}</div>
                 </div>
               </a>
             </div>
