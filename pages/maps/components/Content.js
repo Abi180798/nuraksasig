@@ -57,7 +57,7 @@ export default function Content() {
       setState({
         ...state,
         tLocationLat: state.dataFilter && wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === state.pLocation)[0].latitude,
-        tLocationLng: state.dataFilter && wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === state.pLocation)[0].latitude
+        tLocationLng: state.dataFilter && wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === state.pLocation)[0].longitude
       })
     }
   }, [state.cLocation, state.pLocation, state.dataFilter, state.tLocationLat, state.tLocationLng])
