@@ -39,6 +39,7 @@ export default function ListWisata({ wisatas }) {
               'Data kamu telah dihapus.',
               'success'
             ).then((result) => {
+              router.push("/dashboard/wisata")
               router.reload()
             })
           })

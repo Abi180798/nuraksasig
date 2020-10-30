@@ -39,6 +39,7 @@ export default function ListUser({ dataUser }) {
               'Data kamu telah dihapus.',
               'success'
             ).then((result) => {
+              router.push("/dashboard/user")
               router.reload()
             })
           })

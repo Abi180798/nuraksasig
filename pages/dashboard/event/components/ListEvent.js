@@ -40,6 +40,7 @@ export default function ListEvent({events}) {
               'Data kamu telah dihapus.',
               'success'
             ).then((result) => {
+              router.push("/dashboard/event")
               router.reload()
             })
           })
