@@ -2,10 +2,30 @@ import Layout from "../../../layouts/Layout";
 import FormWisata from "../components/FormWisata";
 import dataWisata from '../../../../mock/wisata.json'
 import { useRouter } from 'next/router'
+import { useState,useEffect } from "react";
+import { WisataAPI } from "../../../api/WisataAPI";
+import Loading from "../../../utils/Loading";
+import withPrivateRoute from "../../../utils/withPrivateRoute";
 
-export default function Editz(){
+function Editz(){
     const router = useRouter()
-
+    const [state, setState] = useState({
+      loading: false
+  })
+    const [wisatas, setWisatas] = useState({
+        data: null
+      })
+      async function getData() {
+        setState({...state,loading:true})
+        const rWisata = await WisataAPI.getListWisata()
+        setWisatas({
+          data: rWisata.data
+        })
+        setState({...state,loading:false})
+      }
+      useEffect(() => {
+        getData()
+      }, [])
     return(
         <Layout title="Wisata">
             <main>
@@ -18,11 +38,16 @@ export default function Editz(){
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
-                    <FormWisata dataWisata={dataWisata.data.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)[0]}/>
-                        </div>
+                            {wisatas.data&&
+                    <FormWisata dataWisata={wisatas.data.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)[0]} mode="taek"/>
+                            }    
+                    </div>
                     </div>
                 </div>
             </main>
+            {state.loading&&<Loading/>}
         </Layout>
     )
 }
+
+export default withPrivateRoute(Editz)

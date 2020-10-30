@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import store from 'store'
+import { TOKEN } from '../../utils/constants'
 
 export default function Navbar() {
     const [state, setState] = useState({
@@ -35,7 +36,7 @@ export default function Navbar() {
                         <Link href="/aboutus">
                         <li className="nav-item"><a className="nav-link js-scroll-trigger">About Us</a></li>
                         </Link>
-                        {store.get("token") ?
+                        {store.get(TOKEN) ?
                             <li className="nav-item"><Link href="/dashboard"><a className="nav-link js-scroll-trigger">Dashboard</a></Link></li>
                             :
                             <li className="nav-item"><Link href="/login"><a className="nav-link js-scroll-trigger">Login</a></Link></li>

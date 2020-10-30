@@ -2,12 +2,13 @@ import Layout from "../../../layouts/Layout";
 import FormUser from "../components/FormUser";
 import dataUser from '../../../../mock/user.json'
 import { useRouter } from 'next/router'
+import withPrivateRoute from "../../../utils/withPrivateRoute";
 
-export default function Addz(){
+function Addz(){
     const router = useRouter()
 
     return(
-        <Layout title="Wisata">
+        <Layout title="User">
             <main>
                 <div className="container-fluid">
                     <h1 className="mt-4">Add User</h1>
@@ -18,7 +19,7 @@ export default function Addz(){
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
-                    <FormUser dataUser={dataUser.data.filter((row)=>row.id_user.toString()===router.query.id_user)[0]}/>
+                    <FormUser />
                         </div>
                     </div>
                 </div>
@@ -26,3 +27,5 @@ export default function Addz(){
         </Layout>
     )
 }
+
+export default withPrivateRoute(Addz)

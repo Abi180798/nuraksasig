@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import store from 'store'
+import { ROLE, USER } from '../../utils/constants'
 
 export default function SidebarAdmin({ title }) {
   const [state, setState] = useState(false)
@@ -21,7 +22,6 @@ export default function SidebarAdmin({ title }) {
     } else {
       menuside.classList.remove("show")
     }
-    console.log(state)
   }, [state])
   return (
     <div id="layoutSidenav_nav">
@@ -50,7 +50,7 @@ export default function SidebarAdmin({ title }) {
                 <Link href="/dashboard/event">
                   <a className="nav-link" id="linkEvent">Event</a>
                 </Link>
-                {store.get("token") === "superadmin" &&
+                {store.get(ROLE) === "superadmin" &&
                 <Link href="/dashboard/user">
                   <a className="nav-link" id="linkUser">User</a>
                 </Link>
@@ -72,8 +72,8 @@ export default function SidebarAdmin({ title }) {
           </div>
         </div>
         <div className="sb-sidenav-footer">
-          <div className="small">Logged in as:</div>
-          {store.get("token") === "admin" ? "Admin" : store.get("token") === "superadmin" && "Super Admin"}-TAHURA Nuraksa
+              <div className="small">Logged in as: {store.get(ROLE)&&store.get(USER).username}</div>
+          {store.get(ROLE) === "admin" ? "Admin" : store.get(ROLE) === "superadmin" && "Super Admin"}-TAHURA Nuraksa
           </div>
       </nav>
     </div>

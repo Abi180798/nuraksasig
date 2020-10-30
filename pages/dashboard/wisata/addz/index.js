@@ -1,11 +1,10 @@
 import Layout from "../../../layouts/Layout";
 import FormWisata from "../components/FormWisata";
-import dataWisata from '../../../../mock/wisata.json'
 import { useRouter } from 'next/router'
+import withPrivateRoute from "../../../utils/withPrivateRoute";
 
-export default function Addz(){
+function Addz(){
     const router = useRouter()
-    console.log(dataWisata)
     return(
         <Layout title="Wisata">
             <main>
@@ -18,7 +17,7 @@ export default function Addz(){
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
-                    <FormWisata dataWisata={dataWisata.data.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)[0]}/>
+                    <FormWisata/>
                         </div>
                     </div>
                 </div>
@@ -26,3 +25,5 @@ export default function Addz(){
         </Layout>
     )
 }
+
+export default withPrivateRoute(Addz)

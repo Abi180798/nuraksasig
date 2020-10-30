@@ -1,25 +1,33 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Layout from "../../../layouts/Layout";
 import FormEvent from "../components/FormEvent";
 import { useRouter } from 'next/router'
+import { EventAPI } from '../../../api/EventAPI';
+import Loading from '../../../utils/Loading';
+import withPrivateRoute from '../../../utils/withPrivateRoute';
 
-export default function Detailz(){
+function Detailz() {
     const router = useRouter()
-    const [events,setEvents] = useState({
-        data:null
-      })
-      async function getData() {
-        const r = await axios.get("https://tahuraevent.herokuapp.com/event/getall")
+    const [state, setState] = useState({
+        loading: false
+    })
+    const [events, setEvents] = useState({
+        data: null
+    })
+    async function getData() {
+        setState({ ...state, loading: true })
+        const r = await EventAPI.getListEvent()
         setEvents({
-          data:r.data
+            data: r.data
         })
-      }
-      useEffect(() => {
+        setState({ ...state, loading: false })
+    }
+    useEffect(() => {
         getData()
-      }, [])
-    return(
-        <Layout title="Wisata">
+    }, [])
+    return (
+        <Layout title="Event">
             <main>
                 <div className="container-fluid">
                     <h1 className="mt-4">Detail Event</h1>
@@ -30,13 +38,16 @@ export default function Detailz(){
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
-                            {events.data&&
-                    <FormEvent dataEvent={events.data&&events.data.event.filter((row)=>row.id.toString()===router.query.id)[0]}/>
+                            {events.data &&
+                                <FormEvent dataEvent={events.data && events.data.filter((row) => row.id_event.toString() === router.query.id)[0]} />
                             }
                         </div>
                     </div>
                 </div>
             </main>
+            {state.loading&&<Loading/>}
         </Layout>
     )
 }
+
+export default withPrivateRoute(Detailz)

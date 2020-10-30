@@ -2,13 +2,54 @@ import React,{useState,useEffect} from 'react'
 import {useMediaQuery} from 'react-responsive'
 import Link from 'next/link'
 import store from 'store'
+import { TOKEN } from '../../utils/constants'
+import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
+import Loading from '../utils/Loading'
 
 export default function NavbarAdmin(){
+    const router = useRouter()
     const isTabletOrMobile = useMediaQuery({ maxWidth: 991 })
     const [state,setState] = useState({
+        loading:false,
         statsNav: true,
         navStats: false,
     })
+    const logout = async (id) => {
+        Swal.fire({
+          title: 'Apakah anda yakin?',
+          text: "Anda akan keluar session ini!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, keluar!',
+          cancelButtonText: 'Tidak',
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            setState({...state,loading:true})
+            store.remove(TOKEN)
+            // // const response = await UserAPI.delWisata(id)
+            // if (response.status === 500) {
+            //   ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
+            // } else if (response.status_code === 401) {
+            //   ShowNotify("Invalid Token.", notifyPosition.topCenter, notifyType.error)
+            // } else if (response.status_code === 200) {
+            //   ShowNotify("Berhasil hapus user", notifyPosition.topCenter, notifyType.success, () => {
+            //     Swal.fire(
+            //       'Terhapus!',
+            //       'Data kamu telah dihapus.',
+            //       'success'
+            //     ).then((result) => {
+            //       router.reload()
+            //     })
+            //   })
+            // }
+            setState({...state,loading:false})
+            router.reload()
+          }
+        })
+      }
     useEffect(() => {
         const toggle = document.getElementById("sidenavAccordion")
         const btn_toggle = document.getElementById("sidebarToggle")
@@ -73,12 +114,11 @@ export default function NavbarAdmin(){
                         <a className="dropdown-item">Landing Page</a>
                         </Link>
                         <div className="dropdown-divider"></div>
-                        <Link href="/">
-                        <a className="dropdown-item" onClick={e=>store.remove("token")}>Logout</a>
-                        </Link>
+                        <a className="dropdown-item" onClick={e=>logout()}>Logout</a>
                     </div>
                 </li>
             </ul>
+            {state.loading&&<Loading/>}
         </nav>
     )
 }

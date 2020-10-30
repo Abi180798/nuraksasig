@@ -22,19 +22,19 @@ export function popUpAlertEvent(message1,message2,type1,type2,txtBtn1,txtBtn2,re
     confirmButtonText: `${txtBtn1}`,
     cancelButtonText: `${txtBtn2}`
   }).then((result) => {
-    if (result.value) {
+    if (result.isConfirmed) {
+      event
       Swal.fire({
         title: `${message2}`,
         icon: `${type2}`,
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Ok',
       }).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
           redirect
           // window.location.reload()
         }
       })
-      event
       // CategoryAPI.remove(isi)
       // history.push('/categories/')
       // window.location.reload()

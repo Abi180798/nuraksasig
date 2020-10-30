@@ -1,5 +1,6 @@
 import React from 'react';
 import Router from 'next/router';
+import { AuthAPI } from '../api/AuthAPI';
 
 const login = '/login'; // Define your login route address.
 
@@ -9,7 +10,11 @@ const login = '/login'; // Define your login route address.
  * @returns {{auth: null}}
  */
 const checkUserAuthentication = () => {
-  return { auth: { isAdmin: true } }; // change null to { isAdmin: true } for test it.
+  if (AuthAPI.isAuthenticated()) {
+    return { auth: { isAdmin: true} }; // change null to { isAdmin: true } for test it.
+  } else {
+    return { auth: null }
+  }
 };
 
 export default WrappedComponent => {

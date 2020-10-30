@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
+import { WisataAPI } from '../api/WisataAPI'
 
 const dataWisata = require('../../mock/wisata.json')
 
@@ -6,6 +7,20 @@ export default function Wisata() {
   const [state, setState] = useState({
     length: 6
   })
+  const [wisatas,setWisatas] = useState({
+    length:6,
+    data:null
+  })
+  async function getData() {
+    const r = await WisataAPI.getListWisata()
+    setWisatas({
+      data:r.data
+    })
+  }
+  useEffect(() => {
+    getData()
+  }, [])
+  console.log(wisatas)
   return (
     <div>
       <section className="page-section bg-primary" id="about">
@@ -25,7 +40,7 @@ export default function Wisata() {
           <h2 className="text-center mt-0">List Of Trip</h2>
           <hr className="divider my-4" />
           <div className="row">
-            {dataWisata.data.slice(0, state.length).map((arr) => (
+            {wisatas.data&&wisatas.data.slice(0, state.length).map((arr) => (
               <div className="col-md-6 col-lg-4 mb-5" key={arr.id_wisata}>
                 <div className="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
                   <div className="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -39,10 +54,10 @@ export default function Wisata() {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-12 text-center">
-                  {dataWisata.data.length >= 6 &&
+                  {wisatas.data&&wisatas.data.length >= 6 &&
                     <a className="btn btn-warning btn-xl js-scroll-trigger"
-                      onClick={e => setState({ length: dataWisata.data.length === state.length ? 6 : dataWisata.data.length })}>
-                      {dataWisata.data.length === state.length ? "Lihat Lebih Sedikit" : "Lihat Lebih Banyak"}
+                      onClick={e => setState({ length: wisatas.data.length === state.length ? 6 : wisatas.data.length })}>
+                      {wisatas.data.length === state.length ? "Lihat Lebih Sedikit" : "Lihat Lebih Banyak"}
                     </a>
                   }
                 </div>

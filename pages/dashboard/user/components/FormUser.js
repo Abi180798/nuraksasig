@@ -1,14 +1,17 @@
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { notifyPosition, notifyType, ShowNotify } from '../../../../utils/notification'
+import { UserAPI } from '../../../api/UserAPI'
 export default function FormUser({ dataUser }) {
   const router = useRouter()
-  // console.log("taek",dataUser&&dataUser.nama_lengkap)
-  // const data_wisata = dataWisata.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)
+  const [state,setState] = useState({
+    loading:false
+  })
   return (
-    // dataWisata===undefined?"":
     <Formik
       initialValues={{
-        nama_lengkap: dataUser && dataUser.nama_lengkap || '',
+        nama_admin: dataUser && dataUser.nama_admin || '',
         alamat: dataUser && dataUser.alamat || '',
         no_hp: dataUser && dataUser.no_hp || '',
         username: dataUser && dataUser.username || '',
@@ -16,19 +19,33 @@ export default function FormUser({ dataUser }) {
         role: dataUser && dataUser.role || '',
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
+        setTimeout(async() => {
+          setState({...state,loading:true})
           if (router.pathname.split("/")[3] === "addz") {
-            console.log("add")
+            const response = await UserAPI.addUser(values)
+            if (response.status === 500) {
+              ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
+            } else if (response.status === 401) {
+              ShowNotify("Invalid Token.", notifyPosition.topCenter, notifyType.error)
+            } else {
+              ShowNotify(`Berhasil tambah user!`, notifyPosition.topCenter, notifyType.success, () => {
+                router.back()
+              })
+            }
           } else if (router.pathname.split("/")[3] === "editz") {
-            console.log("edit")
+            // const response = await WisataAPI.putWisata(finalValues, window.location.pathname.split("editz/")[1])
+            if (response.status === 500) {
+              ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
+            } else if (response.status === 401) {
+              ShowNotify("Invalid Token.", notifyPosition.topCenter, notifyType.error)
+            } else {
+              ShowNotify(`Berhasil edit user!`, notifyPosition.topCenter, notifyType.success, () => {
+                router.back()
+              })
+            }
           }
+          setState({...state,loading:false})
           alert(JSON.stringify(values))
-
-          // if (values.username === "admin" && values.password === "123") {
-          //   router.push('/dashboard')
-          // } else {
-          //   alert("Username atau password anda salah!")
-          // }
           setSubmitting(false);
         }, 400);
       }}
@@ -54,13 +71,13 @@ export default function FormUser({ dataUser }) {
                   className="form-control input-wisata"
                   placeholder="Masukkan Nama Lengkap"
                   type="text"
-                  name="nama_lengkap"
+                  name="nama_admin"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.nama_lengkap}
+                  value={values.nama_admin}
                 />
               </div>
-              <small className="label-login-error">{errors.nama_lengkap && touched.nama_lengkap && errors.nama_lengkap}</small>
+              <small className="label-login-error">{errors.nama_admin && touched.nama_admin && errors.nama_admin}</small>
             </div>
             <br />
             <div className="row">
@@ -68,7 +85,7 @@ export default function FormUser({ dataUser }) {
                 <label className="label-login">Alamat</label><br />
               </div>
               <div className="col-xl-8">
-                <input
+                <textarea
                   className="form-control input-wisata"
                   placeholder="Masukkan Alamat"
                   type="text"
@@ -143,11 +160,11 @@ export default function FormUser({ dataUser }) {
                 <select 
                 className="form-control input-wisata custom-select"
                 name="role"
-                onChange={e=>setFieldValue("role",e)}
+                onChange={e=>setFieldValue("role",e.target.value)}
                 onBlur={handleBlur}
-                value={values.role}
+                defaultValue={values.role!==""?values.role:""}
                 >
-                  <option selected>Pilih Role</option>
+                  <option value="">Pilih Role</option>
                   <option value="superadmin">Super Admin</option>
                   <option value="admin">Admin</option>
                   {/* <option value="user">User</option> */}

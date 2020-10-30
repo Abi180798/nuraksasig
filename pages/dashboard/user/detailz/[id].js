@@ -2,9 +2,30 @@ import Layout from "../../../layouts/Layout";
 import FormUser from "../components/FormUser";
 import dataUser from '../../../../mock/user.json'
 import { useRouter } from 'next/router'
+import withPrivateRoute from "../../../utils/withPrivateRoute";
+import { useEffect, useState } from "react";
+import { UserAPI } from "../../../api/UserAPI";
+import Loading from "../../../utils/Loading";
 
-export default function Detailz(){
+function Detailz(){
     const router = useRouter()
+    const [state, setState] = useState({
+        loading: false
+    })
+    const [users, setUsers] = useState({
+        data: null
+    })
+    async function getData() {
+        setState({ ...state, loading: true })
+        const r = await UserAPI.getListUser()
+        setUsers({
+            data: r.data
+        })
+        setState({ ...state, loading: false })
+    }
+    useEffect(() => {
+        getData()
+    }, [])
     return(
         <Layout title="User">
             <main>
@@ -17,11 +38,16 @@ export default function Detailz(){
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
-                    <FormUser dataUser={dataUser.data.filter((row)=>row.id_user.toString()===router.query.id_user)[0]}/>
-                        </div>
+                        {users.data &&
+                    <FormUser dataUser={users.data.filter((row)=>row.id_admin.toString()===window.location.pathname.split("detailz/")[1])[0]}/>
+                        }    
+                    </div>
                     </div>
                 </div>
             </main>
+            {state.loading&&<Loading/>}
         </Layout>
     )
 }
+
+export default withPrivateRoute(Detailz)

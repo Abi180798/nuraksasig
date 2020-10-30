@@ -1,12 +1,13 @@
 import Layout from "../../../layouts/Layout";
 import FormEvent from "../components/FormEvent";
 import { useRouter } from 'next/router'
+import withPrivateRoute from "../../../utils/withPrivateRoute";
 
-export default function Addz(){
+function Addz(){
     const router = useRouter()
 
     return(
-        <Layout title="Wisata">
+        <Layout title="Event">
             <main>
                 <div className="container-fluid">
                     <h1 className="mt-4">Add Event</h1>
@@ -25,3 +26,5 @@ export default function Addz(){
         </Layout>
     )
 }
+
+export default withPrivateRoute(Addz)
