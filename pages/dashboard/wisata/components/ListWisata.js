@@ -76,7 +76,7 @@ export default function ListWisata({ wisatas }) {
               </tr>
             </thead>
             <tbody>
-              {wisatas.map((row, index) => (
+              {wisatas&&wisatas.map((row, index) => (
                 <tr key={index}>
                   <td className="text-center">{index + 1}</td>
                   <td>{row.nama_wisata}</td>

@@ -78,7 +78,7 @@ export default function ListUser({ dataUser }) {
               </tr>
             </thead>
             <tbody>
-              {dataUser.map((row, index) => (
+              {dataUser&&dataUser.map((row, index) => (
                 <tr key={index}>
                   <td className="text-center">{index + 1}</td>
                   <td>{row.nama_admin}</td>

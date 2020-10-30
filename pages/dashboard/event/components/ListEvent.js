@@ -79,7 +79,7 @@ export default function ListEvent({events}) {
               </tr>
             </thead>
             <tbody>
-              {events.map((row, index) => (
+              {events&&events.map((row, index) => (
                 <tr key={index}>
                   <td className="text-center">{index + 1}</td>
                   <td>{row.judul_event}</td>
