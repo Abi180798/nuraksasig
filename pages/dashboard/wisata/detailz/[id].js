@@ -40,7 +40,7 @@ function Detailz() {
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
                             {wisatas.data &&
-                                <FormWisata dataWisata={wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === window.location.pathname.split("detailz/")[1])[0]} mode="coba" />
+                                <FormWisata dataWisata={wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === window.location.pathname.split("detailz/")[1])[0]} mode="detail" />
                             }
                         </div>
                     </div>

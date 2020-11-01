@@ -39,7 +39,7 @@ function Editz() {
           <div className="card">
             <div className="card-body ml-5 mr-5">
               {events.data &&
-                <FormEvent dataEvent={events.data && events.data.filter((row) => row.id_event.toString() === window.location.pathname.split("editz/")[1])[0]} />
+                <FormEvent dataEvent={events.data && events.data.filter((row) => row.id_event.toString() === window.location.pathname.split("editz/")[1])[0]} mode="edit"/>
               }
             </div>
           </div>

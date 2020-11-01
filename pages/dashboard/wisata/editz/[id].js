@@ -40,7 +40,7 @@ function Editz(){
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
                         {wisatas.data&&
-                    <FormWisata dataWisata={wisatas.data&&wisatas.data.filter((row)=>row.id_wisata.toString()===window.location.pathname.split("editz/")[1])[0]} mode="coba"/>
+                    <FormWisata dataWisata={wisatas.data&&wisatas.data.filter((row)=>row.id_wisata.toString()===window.location.pathname.split("editz/")[1])[0]} mode="edit"/>
                             }  
                                                     </div>
                     </div>

@@ -1,4 +1,4 @@
-import { getWithoutAuth, postWithAuth, deleteWithAuth, putWithAuth } from '../../utils/requestHandler'
+import { getWithoutAuth, postWithAuth, deleteWithAuth, putWithAuth, PostWithoutAuth } from '../../utils/requestHandler'
 
 const BASE_URL = "https://tahurawisata.herokuapp.com"
 
@@ -17,6 +17,10 @@ export const WisataAPI = {
     },
     async delWisata(id) {
         const r = await deleteWithAuth(`${BASE_URL}/wisata/${id}`)
+        return r;
+    },
+    async uploadImg(id,data) {
+        const r = await PostWithoutAuth(`${BASE_URL}/wisata/wisatas/photo?id=${id}`,data)
         return r;
     }
 }

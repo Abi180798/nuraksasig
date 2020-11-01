@@ -1,4 +1,4 @@
-import { getWithoutAuth, deleteWithAuth, postWithAuth, putWithAuth } from '../../utils/requestHandler'
+import { getWithoutAuth, deleteWithAuth, postWithAuth, putWithAuth, PostWithoutAuth } from '../../utils/requestHandler'
 
 const BASE_URL = "https://eventtahura.herokuapp.com"
 
@@ -17,6 +17,10 @@ export const EventAPI = {
     },
     async delEvent(id) {
         const r = await deleteWithAuth(`${BASE_URL}/event/${id}`)
+        return r;
+    },
+    async uploadImg(id,data) {
+        const r = await PostWithoutAuth(`${BASE_URL}/event/events/photo?id=${id}`,data)
         return r;
     }
 }

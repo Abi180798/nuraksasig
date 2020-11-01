@@ -18,7 +18,7 @@ function Addz(){
                     </ol>
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
-                    <FormEvent/>
+                    <FormEvent mode="add"/>
                         </div>
                     </div>
                 </div>

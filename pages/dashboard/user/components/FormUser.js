@@ -3,10 +3,13 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { notifyPosition, notifyType, ShowNotify } from '../../../../utils/notification'
 import { UserAPI } from '../../../api/UserAPI'
+import * as Yup from 'yup'
+
 export default function FormUser({ dataUser }) {
   const router = useRouter()
-  const [state,setState] = useState({
-    loading:false
+  const [state, setState] = useState({
+    loading: false,
+    togglePass: false
   })
   return (
     <Formik
@@ -18,9 +21,19 @@ export default function FormUser({ dataUser }) {
         password: dataUser && dataUser.password || '',
         role: dataUser && dataUser.role || '',
       }}
+      validationSchema={
+        Yup.object({
+          nama_admin: Yup.string().required("Harus diisi"),
+          alamat: Yup.string().required(" Harus diisi"),
+          no_hp: Yup.string().required(" Harus diisi"),
+          username: Yup.string().required(" Harus diisi"),
+          password: Yup.string().required(" Harus diisi"),
+          role: Yup.string().required(" Harus diisi"),
+        })
+      }
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(async() => {
-          setState({...state,loading:true})
+        setTimeout(async () => {
+          setState({ ...state, loading: true })
           if (router.pathname.split("/")[3] === "addz") {
             const response = await UserAPI.addUser(values)
             if (response.status === 500) {
@@ -44,7 +57,7 @@ export default function FormUser({ dataUser }) {
               })
             }
           }
-          setState({...state,loading:false})
+          setState({ ...state, loading: false })
           alert(JSON.stringify(values))
           setSubmitting(false);
         }, 400);
@@ -76,8 +89,8 @@ export default function FormUser({ dataUser }) {
                   onBlur={handleBlur}
                   value={values.nama_admin}
                 />
+                <small className="label-login-error">{errors.nama_admin && touched.nama_admin && errors.nama_admin}</small>
               </div>
-              <small className="label-login-error">{errors.nama_admin && touched.nama_admin && errors.nama_admin}</small>
             </div>
             <br />
             <div className="row">
@@ -94,8 +107,8 @@ export default function FormUser({ dataUser }) {
                   onBlur={handleBlur}
                   value={values.alamat}
                 />
+                <small className="label-login-error">{errors.alamat && touched.alamat && errors.alamat}</small>
               </div>
-              <small className="label-login-error">{errors.alamat && touched.alamat && errors.alamat}</small>
             </div>
             <br />
             <div className="row">
@@ -112,8 +125,8 @@ export default function FormUser({ dataUser }) {
                   onBlur={handleBlur}
                   value={values.no_hp}
                 />
+                <small className="label-login-error">{errors.no_hp && touched.no_hp && errors.no_hp}</small>
               </div>
-              <small className="label-login-error">{errors.no_hp && touched.no_hp && errors.no_hp}</small>
             </div>
             <br />
             <div className="row">
@@ -130,8 +143,8 @@ export default function FormUser({ dataUser }) {
                   onBlur={handleBlur}
                   value={values.username}
                 />
+                <small className="label-login-error">{errors.username && touched.username && errors.username}</small>
               </div>
-              <small className="label-login-error">{errors.username && touched.username && errors.username}</small>
             </div>
             <br />
             <div className="row">
@@ -139,17 +152,24 @@ export default function FormUser({ dataUser }) {
                 <label className="label-login">Password</label><br />
               </div>
               <div className="col-xl-8">
-                <input
-                  className="form-control input-wisata"
-                  placeholder="Masukkan Password"
-                  type="text"
-                  name="password"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                />
+                <div className="form-group">
+                  <div className="input-group" id="show_hide_password">
+                    <input
+                      className="form-control"
+                      placeholder="Masukkan Password"
+                      type={state.togglePass ? "text" : "password"}
+                      name="password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                    />
+                    <div className="input-group-prepend" id="hider" onClick={e => setState({ ...state, togglePass: !state.togglePass })}>
+                      <span className="input-group-text" id="validationTooltipUsernamePrepend"><i class={state.togglePass ? "fa fa-eye" : "fa fa-eye-slash"} aria-hidden="true"></i></span>
+                    </div>
+                  </div>
+                  <small className="label-login-error">{errors.password && touched.password && errors.password}</small>
+                </div>
               </div>
-              <small className="label-login-error">{errors.password && touched.password && errors.password}</small>
             </div>
             <br />
             <div className="row">
@@ -157,20 +177,20 @@ export default function FormUser({ dataUser }) {
                 <label className="label-login">Role</label><br />
               </div>
               <div className="col-xl-8">
-                <select 
-                className="form-control input-wisata custom-select"
-                name="role"
-                onChange={e=>setFieldValue("role",e.target.value)}
-                onBlur={handleBlur}
-                defaultValue={values.role!==""?values.role:""}
+                <select
+                  className="form-control input-wisata custom-select"
+                  name="role"
+                  onChange={e => setFieldValue("role", e.target.value)}
+                  onBlur={handleBlur}
+                  defaultValue={values.role !== "" ? values.role : ""}
                 >
                   <option value="">Pilih Role</option>
                   <option value="superadmin">Super Admin</option>
                   <option value="admin">Admin</option>
                   {/* <option value="user">User</option> */}
                 </select>
+                <small className="label-login-error">{errors.deskripsi_alamat && touched.deskripsi_alamat && errors.deskripsi_alamat}</small>
               </div>
-              <small className="label-login-error">{errors.deskripsi_alamat && touched.deskripsi_alamat && errors.deskripsi_alamat}</small>
             </div>
             <br />
             <div>

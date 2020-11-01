@@ -1,0 +1,38 @@
+.avatar-form {
+  display: flex;
+  .avatarnya {
+    height: 88px;
+    width: 88px;
+    img {
+      // background-image: url("../img/icons/user.png");
+      background-size: 88px;
+      // border-radius: 50%;
+      position: absolute;
+      width: 88px;
+      height: 88px;
+    }
+  }
+  .label-avatar {
+    margin-left: 16px;
+    display: grid;
+  }
+  .upload-photos {
+    width: 107px;
+    height: 48px;
+    border-radius: 6px;
+    box-shadow: 1px 2px 8px 0 rgba(0, 0, 0, 0.05);
+    border: solid 1px #c6cbda;
+    text-align: center;
+    align-items: center;
+    display: grid;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .avatar-form{
+    display: block;
+    .label-avatar{
+      margin-left: 0%;
+    }
+  }
+}

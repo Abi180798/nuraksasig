@@ -5,12 +5,29 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { notifyPosition, notifyType, ShowNotify } from '../../../../utils/notification'
 import { EventAPI } from '../../../api/EventAPI'
-export default function FormEvent({ dataEvent }) {
+import * as Yup from 'yup'
+
+export default function FormEvent({ dataEvent, mode }) {
   const router = useRouter()
   const [state, setState] = useState({
-    loading:false,
+    loading: false,
     tanggal_event: new Date()
   })
+  const uploadedImageProfile = React.useRef(null);
+  const changeImg = e => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const { current } = uploadedImageProfile;
+      current.file = file;
+      reader.onload = (e) => {
+        current.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+      setState({ ...state, profilePicture: file.name })
+      return file
+    }
+  }
   const ExampleCustomTimeInput = ({ date, value, onChange }) => (
     <input
       className={state.tanggal_event ? "" : "d-none"}
@@ -22,18 +39,26 @@ export default function FormEvent({ dataEvent }) {
   return (
     <Formik
       initialValues={{
+        gambar_event: dataEvent && dataEvent.gambar_event || '',
         judul_event: dataEvent && dataEvent.judul_event || '',
         deskripsi_event: dataEvent && dataEvent.deskripsi_event || '',
         tanggal_event: dataEvent && new Date(dataEvent.tanggal_event) || new Date(),
       }}
+      validationSchema={
+        Yup.object({
+          judul_event: Yup.string().required("Harus diisi"),
+          tanggal_event: Yup.string().required(" Harus diisi"),
+          deskripsi_event: Yup.string().required(" Harus diisi"),
+        })
+      }
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(async() => {
+        setTimeout(async () => {
           const finalValues = {
             judul_event: values.judul_event,
             deskripsi_event: values.deskripsi_event,
             tanggal_event: moment(values.tanggal_event).format("DD-MM-YYYY, HH:mm")
           }
-          setState({...state,loading:true})
+          setState({ ...state, loading: true })
           if (router.pathname.split("/")[3] === "addz") {
             const response = await EventAPI.addEvent(finalValues)
             if (response.status === 500) {
@@ -46,6 +71,10 @@ export default function FormEvent({ dataEvent }) {
               })
             }
           } else if (router.pathname.split("/")[3] === "editz") {
+            const [file] = values.gambar_event
+            var files = new FormData()
+            files.append("photo", file)
+            const img = await EventAPI.uploadImg(window.location.pathname.split("editz/")[1], files)
             const response = await EventAPI.putEvent(finalValues, window.location.pathname.split("editz/")[1])
             if (response.status === 500) {
               ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
@@ -53,11 +82,11 @@ export default function FormEvent({ dataEvent }) {
               ShowNotify("Invalid Token.", notifyPosition.topCenter, notifyType.error)
             } else {
               ShowNotify(`Berhasil edit event!`, notifyPosition.topCenter, notifyType.success, () => {
-                router.back()
+                // router.back()
               })
             }
           }
-          setState({...state,loading:false})
+          setState({ ...state, loading: false })
           setSubmitting(false);
         }, 400);
       }}
@@ -74,6 +103,32 @@ export default function FormEvent({ dataEvent }) {
         /* and other goodies */
       }) => (
           <form onSubmit={handleSubmit}>
+            {mode !== "add" &&
+              <div className="form-group">
+                <div className="avatar-form">
+                  <div className="avatarnya">
+                    <img ref={uploadedImageProfile} src={dataEvent && dataEvent.gambar_event !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${dataEvent && dataEvent.gambar_event}` : "../../../../static/assets/img/imgnotfound.png"} />
+                  </div>
+                  <div className="label-avatar">
+                    <label>Foto</label>
+                    <span style={{ display: "flex", alignItems: "center" }}>
+                      {mode !== "detail" && <label for="upload-pp" className="upload-photos">Choose File</label>}
+                      <span className="pl-3">{state.profilePicture}</span>
+                    </span>
+                    <input
+                      id="upload-pp"
+                      style={{ display: "none" }}
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        changeImg(e)
+                        setFieldValue("gambar_event", e.target.files)
+                      }} />
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            }
             <div className="row">
               <div className="col-xl-4">
                 <label className="label-login">Judul Event</label>
@@ -88,8 +143,8 @@ export default function FormEvent({ dataEvent }) {
                   onBlur={handleBlur}
                   value={values.judul_event}
                 />
+                <small className="label-login-error">{errors.judul_event && touched.judul_event && errors.judul_event}</small>
               </div>
-              <small className="label-login-error">{errors.judul_event && touched.judul_event && errors.judul_event}</small>
             </div>
             <br />
             <div className="row">
@@ -107,7 +162,6 @@ export default function FormEvent({ dataEvent }) {
                   value={values.deskripsi_event}
                 />
               </div>
-              <small className="label-login-error">{errors.deskripsi_event && touched.deskripsi_event && errors.deskripsi_event}</small>
             </div>
             <br />
             <div className="row">
@@ -128,8 +182,8 @@ export default function FormEvent({ dataEvent }) {
                   customTimeInput={<ExampleCustomTimeInput />}
                   placeholderText="Pilih Tanggal Event"
                 />
+                <small className="label-login-error">{errors.tanggal_event && touched.tanggal_event && errors.tanggal_event}</small>
               </div>
-              <small className="label-login-error">{errors.tanggal_event && touched.tanggal_event && errors.tanggal_event}</small>
             </div>
             <br />
             <div>

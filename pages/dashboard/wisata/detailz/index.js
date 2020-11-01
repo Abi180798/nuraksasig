@@ -39,7 +39,7 @@ function Detailz(){
                     <div className="card">
                         <div className="card-body ml-5 mr-5">
                             {wisatas.data&&
-                    <FormWisata dataWisata={wisatas.data.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)[0]} mode="taek"/>
+                    <FormWisata dataWisata={wisatas.data.filter((row)=>row.id_wisata.toString()===router.query.id_wisata)[0]} mode="detail"/>
                             }    
                     </div>
                     </div>
