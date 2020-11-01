@@ -46,7 +46,7 @@ export default function Wisata() {
                   <div className="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                     <div className="portfolio-item-caption-content text-center text-white"><i className="fas fa-plus fa-3x"></i></div>
                   </div>
-                  <img className="img-fluid" src="../static/assets/img/portfolio/cabin.png" alt="" />
+                  <img className="img-fluid" src={arr.gambar_wisata !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${arr.gambar_wisata}` : "../../static/assets/img/imgnotfound.png"} alt="" />
                 </div>
                 <b>{arr.nama_wisata}</b>
               </div>

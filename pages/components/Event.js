@@ -34,8 +34,8 @@ export default function Event() {
           <div className="row no-gutters">
             {events.data&&events.data.slice(0,state.length).map((row,index)=>(
             <div className="col-lg-4 col-sm-6" key={index}>
-              <a className="portfolio-box" href="../static/assets/img/portfolio/fullsize/1.jpg">
-                <img className="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
+              <a className="portfolio-box" href={row.gambar_event !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${row.gambar_event}` : "../../static/assets/img/image-not-found.png"} target="_blank">
+                <img className="img-fluid" src={row.gambar_event !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${row.gambar_event}` : "../../static/assets/img/image-not-found.png"} alt="" style={{height:250,width:"100%"}}/>
                 <div className="portfolio-box-caption">
                   <div className="project-category text-white-50">{row.judul_event}</div>
             <div className="project-name">{row.deskripsi_event}<br/>{getDateTimeArrayIndo(row.tanggal_event)}</div>
