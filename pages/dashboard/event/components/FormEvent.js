@@ -242,7 +242,7 @@ export default function FormEvent({ dataEvent, mode }) {
                   Submit
            </button>
               }
-              <button onClick={e => router.push("/dashboard/event")} type="button" className="btn btn-dark float-right" disabled={isSubmitting}>
+              <button onClick={e => router.back()} type="button" className="btn btn-dark float-right" disabled={isSubmitting}>
                 Back
            </button>
             </div>

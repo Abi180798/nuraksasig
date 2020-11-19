@@ -300,13 +300,13 @@ export default function FormWisata({ dataWisata, mode }) {
                     Submit
                   </button>
                 }
-                <Link href="/dashboard/wisata" >
-                  <a>
-                    <button onClick={e=>router.push("/dashboard/wisata")} className="btn btn-dark float-right" disabled={isSubmitting}>
+                {/* <Link href="/dashboard/wisata" >
+                  <a> */}
+                    <button onClick={e=>router.back()} className="btn btn-dark float-right" disabled={isSubmitting}>
                       Back
                     </button>
-                  </a>
-                </Link>
+                  {/* </a>
+                </Link> */}
               </div>
             </form>
           )}
