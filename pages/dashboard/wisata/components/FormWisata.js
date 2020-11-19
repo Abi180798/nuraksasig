@@ -51,10 +51,12 @@ export default function FormWisata({ dataWisata, mode }) {
         }
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(async () => {
+            const [file] = values.gambar_wisata
             const finalValues = {
               nama_wisata: values.nama_wisata,
               alamat_wisata: values.alamat_wisata,
               deskripsi_wisata: values.deskripsi_wisata,
+              gambar_wisata: file&&file,
               kategori: values.kategori,
               latitude: parseFloat(values.latitude),
               longitude: parseFloat(values.longitude)
