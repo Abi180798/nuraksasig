@@ -119,7 +119,7 @@ export default function FormWisata({ dataWisata, mode }) {
               } else {
                 ShowNotify(`Berhasil tambah wisata!`, notifyPosition.topCenter, notifyType.success, () => {
                   // window.location.reload()
-                  router.push("/dashboard/wisata")
+                  router.back()
                 })
               }
             } else if (router.pathname.split("/")[3] === "editz") {
@@ -135,7 +135,7 @@ export default function FormWisata({ dataWisata, mode }) {
               } else {
                 ShowNotify(`Berhasil edit wisata!`, notifyPosition.topCenter, notifyType.success, () => {
                   // window.location.reload()
-                    router.push("/dashboard/wisata")
+                    router.back()
                 })
               }
             }
