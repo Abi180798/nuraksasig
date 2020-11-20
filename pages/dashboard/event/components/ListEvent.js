@@ -41,7 +41,7 @@ export default function ListEvent({events}) {
               'success'
             ).then((result) => {
               router.push("/dashboard/event")
-              router.reload()
+              // router.reload()
             })
           })
         }

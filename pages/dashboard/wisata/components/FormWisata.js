@@ -6,11 +6,15 @@ import { notifyPosition, notifyType, ShowNotify } from '../../../../utils/notifi
 import { WisataAPI } from '../../../api/WisataAPI'
 import Loading from '../../../utils/Loading'
 import * as Yup from 'yup'
+import fconfig from '../../../../config/fconfig'
+
+const conf = fconfig.storage()
 
 export default function FormWisata({ dataWisata, mode }) {
   const router = useRouter()
   const [state, setState] = useState({
-    loading: false
+    loading: false,
+    url:null
   })
   const uploadedImageProfile = React.useRef(null);
   const changeImg = e => {
@@ -27,6 +31,15 @@ export default function FormWisata({ dataWisata, mode }) {
       return file
     }
   }
+  async function getImages() {
+    if (dataWisata && dataWisata.gambar_wisata) {
+      const urls = await conf.ref(`images`).child(dataWisata.gambar_wisata).getDownloadURL()
+      setState({ ...state, url: urls })
+    }
+  }
+  useEffect(() => {
+    getImages()
+  }, [])
   return (
     <div>
       <Formik
@@ -56,12 +69,19 @@ export default function FormWisata({ dataWisata, mode }) {
               nama_wisata: values.nama_wisata,
               alamat_wisata: values.alamat_wisata,
               deskripsi_wisata: values.deskripsi_wisata,
-              gambar_wisata: file&&file,
+              gambar_wisata: file && file.name,
               kategori: values.kategori,
               latitude: parseFloat(values.latitude),
               longitude: parseFloat(values.longitude)
             }
             setState({ ...state, loading: true })
+            if(file){
+              try{
+                conf.ref(`images-event/${file.name}`).put(file)
+              }catch(err){
+                console.log(err)
+              }
+            }
             if (router.pathname.split("/")[3] === "addz") {
               const response = await WisataAPI.addWisata(finalValues)
               if (response.status === 500) {
@@ -74,10 +94,9 @@ export default function FormWisata({ dataWisata, mode }) {
                 })
               }
             } else if (router.pathname.split("/")[3] === "editz") {
-              const [file] = values.gambar_wisata
-              var files = new FormData()
-              files.append("photo", file)
-              const img = await WisataAPI.uploadImg(window.location.pathname.split("editz/")[1], files)
+              // var files = new FormData()
+              // files.append("photo", file)
+              // const img = await WisataAPI.uploadImg(window.location.pathname.split("editz/")[1], files)
               const response = await WisataAPI.putWisata(finalValues, window.location.pathname.split("editz/")[1])
               if (response.status === 500) {
                 ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
@@ -106,11 +125,14 @@ export default function FormWisata({ dataWisata, mode }) {
           /* and other goodies */
         }) => (
             <form onSubmit={handleSubmit}>
-              {mode !== "add" &&
+              {/* {mode !== "add" && */}
                 <div className="form-group">
                   <div className="avatar-form">
                     <div className="avatarnya">
-                      <img ref={uploadedImageProfile} src={dataWisata && dataWisata.gambar_wisata !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${dataWisata && dataWisata.gambar_wisata}` : "../../../../static/assets/img/imgnotfound.png"} />
+                      <img ref={uploadedImageProfile} src={dataWisata && dataWisata.gambar_wisata !== "" && state.url ? 
+                      state.url
+                      // `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${dataWisata && dataWisata.gambar_wisata}` 
+                      : "../../../../static/assets/img/imgnotfound.png"} />
                     </div>
                     <div className="label-avatar">
                       <label>Foto</label>
@@ -131,7 +153,7 @@ export default function FormWisata({ dataWisata, mode }) {
                     </div>
                   </div>
                 </div>
-              }
+              {/* } */}
               <div className="row">
                 <div className="col-xl-4 d-flex align-items-center">
                   <label className="label-login">Nama Wisata</label>

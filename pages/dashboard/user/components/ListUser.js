@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { notifyPosition, notifyType, ShowNotify } from '../../../../utils/notification'
 import { useRouter } from 'next/router'
 import { USER } from '../../../../utils/constants'
+import Swal from 'sweetalert2'
+import { UserAPI } from '../../../api/UserAPI'
+import Loading from '../../../utils/Loading'
 
 const $ = require('jquery')
 $.Datatable = require('datatables.net')
@@ -27,7 +30,7 @@ export default function ListUser({ dataUser }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         setState({ ...state, loading: true })
-        // const response = await UserAPI.delWisata(id)
+        const response = await UserAPI.delUser(id)
         if (response.status === 500) {
           ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
         } else if (response.status_code === 401) {
@@ -108,7 +111,7 @@ export default function ListUser({ dataUser }) {
                           <a className="w- btn btn-warning btn-sm">Edit</a>
                         </Link>
                       </div>
-                      <div className="text-center m-1">
+                      <div className="text-center m-1" style={row.id_admin===store.get(USER).id_admin?{display:"none"}:{}}>
                         <a className="btn btn-danger btn-sm"
                           onClick={e => deleteUser(row.id_admin)}>
                           Hapus</a>
@@ -121,6 +124,7 @@ export default function ListUser({ dataUser }) {
           </table>
         </div>
       </div>
+      {state.loading&&<Loading/>}
     </div>
   )
 }

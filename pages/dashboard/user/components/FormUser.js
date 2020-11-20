@@ -6,6 +6,7 @@ import { UserAPI } from '../../../api/UserAPI'
 import * as Yup from 'yup'
 
 export default function FormUser({ dataUser }) {
+  console.log("coba",dataUser)
   const router = useRouter()
   const [state, setState] = useState({
     loading: false,
@@ -46,7 +47,7 @@ export default function FormUser({ dataUser }) {
               })
             }
           } else if (router.pathname.split("/")[3] === "editz") {
-            // const response = await WisataAPI.putWisata(finalValues, window.location.pathname.split("editz/")[1])
+            const response = await UserAPI.putUser(values, window.location.pathname.split("editz/")[1])
             if (response.status === 500) {
               ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
             } else if (response.status === 401) {
@@ -58,7 +59,6 @@ export default function FormUser({ dataUser }) {
             }
           }
           setState({ ...state, loading: false })
-          alert(JSON.stringify(values))
           setSubmitting(false);
         }, 400);
       }}
@@ -74,7 +74,7 @@ export default function FormUser({ dataUser }) {
         setFieldValue
         /* and other goodies */
       }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>{console.log("valu",values)}
             <div className="row">
               <div className="col-xl-4">
                 <label className="label-login">Nama Lengkap</label>

@@ -47,7 +47,7 @@ function Dashboard() {
   }, [])
   return (
     <Layout title="Dashboard">
-      {events.data && wisatas.data && users.data &&
+      {events.data && wisatas.data  &&
         <Content events={events.data} wisatas={wisatas.data} users={users.data}/>
       }
       {state.loading&&<Loading/>}

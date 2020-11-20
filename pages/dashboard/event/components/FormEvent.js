@@ -1,17 +1,21 @@
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { notifyPosition, notifyType, ShowNotify } from '../../../../utils/notification'
 import { EventAPI } from '../../../api/EventAPI'
 import * as Yup from 'yup'
+import fconfig from '../../../../config/fconfig'
+
+const conf = fconfig.storage()
 
 export default function FormEvent({ dataEvent, mode }) {
   const router = useRouter()
   const [state, setState] = useState({
     loading: false,
-    tanggal_event: new Date()
+    tanggal_event: new Date(),
+    url: null
   })
   const uploadedImageProfile = React.useRef(null);
   const changeImg = e => {
@@ -36,6 +40,15 @@ export default function FormEvent({ dataEvent, mode }) {
       style={{ border: "solid 1px pink" }}
     />
   );
+  async function getImages() {
+    if (dataEvent && dataEvent.gambar_event) {
+      const urls = await conf.ref(`images-event`).child(dataEvent.gambar_event).getDownloadURL()
+      setState({ ...state, url: urls })
+    }
+  }
+  useEffect(() => {
+    getImages()
+  }, [])
   return (
     <Formik
       initialValues={{
@@ -53,33 +66,45 @@ export default function FormEvent({ dataEvent, mode }) {
       }
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(async () => {
+          const [file] = values.gambar_event
           const finalValues = {
             judul_event: values.judul_event,
             deskripsi_event: values.deskripsi_event,
+            gambar_event: file && file.name,
             tanggal_event: moment(values.tanggal_event).format("DD-MM-YYYY, HH:mm")
           }
           setState({ ...state, loading: true })
+          if(file){
+            try{
+              conf.ref(`images-event/${file.name}`).put(file)
+            }catch(err){
+              console.log(err)
+            }
+          }
           if (router.pathname.split("/")[3] === "addz") {
             const response = await EventAPI.addEvent(finalValues)
             if (response.status === 500) {
               ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
             } else if (response.status === 401) {
               ShowNotify("Invalid Token.", notifyPosition.topCenter, notifyType.error)
+            } else if (response.status === 422) {
+              ShowNotify("Pengisian Form Salah.", notifyPosition.topCenter, notifyType.error)
             } else {
               ShowNotify(`Berhasil tambah event!`, notifyPosition.topCenter, notifyType.success, () => {
-                router.back()
+                // router.back()
               })
             }
           } else if (router.pathname.split("/")[3] === "editz") {
-            const [file] = values.gambar_event
-            var files = new FormData()
-            files.append("photo", file)
-            const img = await EventAPI.uploadImg(window.location.pathname.split("editz/")[1], files)
+            // var files = new FormData()
+            // files.append("photo", file)
+            // const img = await EventAPI.uploadImg(window.location.pathname.split("editz/")[1], files)
             const response = await EventAPI.putEvent(finalValues, window.location.pathname.split("editz/")[1])
             if (response.status === 500) {
               ShowNotify("Network error", notifyPosition.topCenter, notifyType.error)
             } else if (response.status === 401) {
               ShowNotify("Invalid Token.", notifyPosition.topCenter, notifyType.error)
+            } else if (response.status === 422) {
+              ShowNotify("Pengisian Form Salah.", notifyPosition.topCenter, notifyType.error)
             } else {
               ShowNotify(`Berhasil edit event!`, notifyPosition.topCenter, notifyType.success, () => {
                 // router.back()
@@ -103,32 +128,36 @@ export default function FormEvent({ dataEvent, mode }) {
         /* and other goodies */
       }) => (
           <form onSubmit={handleSubmit}>
-            {mode !== "add" &&
-              <div className="form-group">
-                <div className="avatar-form">
-                  <div className="avatarnya">
-                    <img ref={uploadedImageProfile} src={dataEvent && dataEvent.gambar_event !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${dataEvent && dataEvent.gambar_event}` : "../../../../static/assets/img/imgnotfound.png"} />
-                  </div>
-                  <div className="label-avatar">
-                    <label>Foto</label>
-                    <span style={{ display: "flex", alignItems: "center" }}>
-                      {mode !== "detail" && <label for="upload-pp" className="upload-photos">Choose File</label>}
-                      <span className="pl-3">{state.profilePicture}</span>
-                    </span>
-                    <input
-                      id="upload-pp"
-                      style={{ display: "none" }}
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        changeImg(e)
-                        setFieldValue("gambar_event", e.target.files)
-                      }} />
-                    <span></span>
-                  </div>
+            {/* {mode !== "add" && */}
+            <div className="form-group">
+              <div className="avatar-form">
+                <div className="avatarnya">
+                  <img ref={uploadedImageProfile} src={dataEvent && dataEvent.gambar_event !== "" && state.url ?
+                    state.url
+
+                    // `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${dataEvent && dataEvent.gambar_event}` 
+                    : "../../../../static/assets/img/imgnotfound.png"} />
+                </div>
+                <div className="label-avatar">
+                  <label>Foto</label>
+                  <span style={{ display: "flex", alignItems: "center" }}>
+                    {mode !== "detail" && <label for="upload-pp" className="upload-photos">Choose File</label>}
+                    <span className="pl-3">{state.profilePicture}</span>
+                  </span>
+                  <input
+                    id="upload-pp"
+                    style={{ display: "none" }}
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      changeImg(e)
+                      setFieldValue("gambar_event", e.target.files)
+                    }} />
+                  <span></span>
                 </div>
               </div>
-            }
+            </div>
+            {/* } */}
             <div className="row">
               <div className="col-xl-4">
                 <label className="label-login">Judul Event</label>
