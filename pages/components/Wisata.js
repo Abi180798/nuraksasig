@@ -1,5 +1,8 @@
 import { useState,useEffect } from 'react'
 import { WisataAPI } from '../api/WisataAPI'
+import fconfig from '../../config/fconfig'
+
+const conf = fconfig.storage()
 
 const dataWisata = require('../../mock/wisata.json')
 
@@ -9,12 +12,25 @@ export default function Wisata() {
   })
   const [wisatas,setWisatas] = useState({
     length:6,
-    data:null
+    data:null,
+    url:null
   })
   async function getData() {
     const r = await WisataAPI.getListWisata()
+    let resultingArr = []
+    try{
+      const arr = r.data.map((row)=>row.gambar_wisata)
+      var i;
+      for(i=0;i<arr.length;i++){
+        const d = await conf.ref("images").child(arr[i]).getDownloadURL()
+        resultingArr.push(d)
+      }
+    }catch(err){
+      console.log(err)
+    }
     setWisatas({
-      data:r.data
+      data:r.data,
+      url:resultingArr
     })
   }
   useEffect(() => {
@@ -40,13 +56,13 @@ export default function Wisata() {
           <h2 className="text-center mt-0">List Of Trip</h2>
           <hr className="divider my-4" />
           <div className="row">
-            {wisatas.data&&wisatas.data.slice(0, state.length).map((arr) => (
+            {wisatas.data&&wisatas.data.slice(0, state.length).map((arr,index) => (
               <div className="col-md-6 col-lg-4 mb-5" key={arr.id_wisata}>
                 <div className="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
                   <div className="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                     <div className="portfolio-item-caption-content text-center text-white"><i className="fas fa-plus fa-3x"></i></div>
                   </div>
-                  <img className="img-fluid" src={arr.gambar_wisata !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${arr.gambar_wisata}` : "../../static/assets/img/imgnotfound.png"} alt="" />
+                  <img className="img-fluid" src={arr.gambar_wisata !== "" ? wisatas.url[index] : "../../static/assets/img/imgnotfound.png"} alt="" style={{height:250}} />
                 </div>
                 <b>{arr.nama_wisata}</b>
               </div>

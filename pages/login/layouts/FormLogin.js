@@ -10,8 +10,15 @@ import { useState } from 'react'
 export default function FormLogin() {
   const router = useRouter()
   const [state,setState] = useState({
-    loading:false
+    loading:false,
+    showPass:false
   })
+  function handleShowPass(){
+    setState({
+      ...state,
+      showPass:!state.showPass
+    })
+  }
   return (
     <div>
     <Formik
@@ -66,19 +73,20 @@ export default function FormLogin() {
             <label className="label-login">Password</label><br />
             <input
               className="form-control input-login"
-              type="password"
+              type={state.showPass===false?"password":"text"}
               name="password"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
             />
+            <small onClick={handleShowPass} style={{color:"black",cursor:"pointer"}}>{state.showPass===false?"Tampilkan Password":"Sembunyikan Password"}</small>
             <small className="label-login-error">{errors.password && touched.password && errors.password}</small>
             <br />
-            <div>
+            <div className="mt-2">
               <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
                 Submit
            </button>
-              <button onClick={e => router.push("/")} className="btn btn-dark float-right" disabled={isSubmitting}>
+              <button type="button" onClick={e => router.push("/")} className="btn btn-dark float-right" disabled={isSubmitting}>
                 Back
            </button>
             </div>

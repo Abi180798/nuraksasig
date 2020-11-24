@@ -2,6 +2,9 @@ import React,{useState,useEffect} from 'react'
 import moment from 'moment'
 import {EventAPI} from '../api/EventAPI'
 import {getDateTimeArrayIndo} from '../../utils/convert'
+import fconfig from '../../config/fconfig'
+
+const conf = fconfig.storage()
 
 export default function Event() {
   const [state, setState] = useState({
@@ -9,12 +12,25 @@ export default function Event() {
   })
   const [events,setEvents] = useState({
     length:6,
-    data:null
+    data:null,
+    url:null
   })
   async function getData() {
     const r = await EventAPI.getListEvent()
+    let resultingArr = []
+    try{
+      const arr = r.data.map((row)=>row.gambar_event)
+      var i;
+      for(i=0;i<arr.length;i++){
+        const d = await conf.ref("images-event").child(arr[i]).getDownloadURL()
+        resultingArr.push(d)
+      }
+    }catch(err){
+      console.log(err)
+    }
     setEvents({
-      data:r.data
+      data:r.data,
+      url:resultingArr
     })
   }
   useEffect(() => {
@@ -34,8 +50,8 @@ export default function Event() {
           <div className="row no-gutters">
             {events.data&&events.data.slice(0,state.length).map((row,index)=>(
             <div className="col-lg-4 col-sm-6" key={index}>
-              <a className="portfolio-box" href={row.gambar_event !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${row.gambar_event}` : "../../static/assets/img/image-not-found.png"} target="_blank">
-                <img className="img-fluid" src={row.gambar_event !== "" ? `http://tahurawisata.herokuapp.com/wisata/wisatas/photo/${row.gambar_event}` : "../../static/assets/img/image-not-found.png"} alt="" style={{height:250,width:"100%"}}/>
+              <a className="portfolio-box" href={row.gambar_event !== "" ? events.url[index] : "../../static/assets/img/image-not-found.png"} target="_blank">
+                <img className="img-fluid" src={row.gambar_event !== "" ? events.url[index] : "../../static/assets/img/image-not-found.png"} alt="" style={{height:300,width:"100%"}}/>
                 <div className="portfolio-box-caption">
                   <div className="project-category text-white-50">{row.judul_event}</div>
             <div className="project-name">{row.deskripsi_event}<br/>{getDateTimeArrayIndo(row.tanggal_event)}</div>

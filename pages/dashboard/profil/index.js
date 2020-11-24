@@ -1,7 +1,8 @@
 import Layout from "../../layouts/Layout";
+import withPrivateRoute from "../../utils/withPrivateRoute";
 import Content from "./components/Content";
 
-export default function Profil() {
+function Profil() {
   return (
     <Layout title="Profil">
       <main>
@@ -16,3 +17,5 @@ export default function Profil() {
     </Layout>
   )
 }
+
+export default withPrivateRoute(Profil)

@@ -69,7 +69,7 @@ export default function FormWisata({ dataWisata, mode }) {
               nama_wisata: values.nama_wisata,
               alamat_wisata: values.alamat_wisata,
               deskripsi_wisata: values.deskripsi_wisata,
-              gambar_wisata: file && file.name,
+              gambar_wisata: file ? file.name:"imgnotfound.png",
               kategori: values.kategori,
               latitude: parseFloat(values.latitude),
               longitude: parseFloat(values.longitude)
@@ -77,7 +77,7 @@ export default function FormWisata({ dataWisata, mode }) {
             setState({ ...state, loading: true })
             if(file){
               try{
-                conf.ref(`images-event/${file.name}`).put(file)
+                conf.ref(`images/${file.name}`).put(file)
               }catch(err){
                 console.log(err)
               }

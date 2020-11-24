@@ -70,7 +70,7 @@ export default function FormEvent({ dataEvent, mode }) {
           const finalValues = {
             judul_event: values.judul_event,
             deskripsi_event: values.deskripsi_event,
-            gambar_event: file && file.name,
+            gambar_event: file ? file.name:"imgnotfound.png",
             tanggal_event: moment(values.tanggal_event).format("DD-MM-YYYY, HH:mm")
           }
           setState({ ...state, loading: true })
@@ -91,7 +91,7 @@ export default function FormEvent({ dataEvent, mode }) {
               ShowNotify("Pengisian Form Salah.", notifyPosition.topCenter, notifyType.error)
             } else {
               ShowNotify(`Berhasil tambah event!`, notifyPosition.topCenter, notifyType.success, () => {
-                // router.back()
+                router.back()
               })
             }
           } else if (router.pathname.split("/")[3] === "editz") {
@@ -107,7 +107,7 @@ export default function FormEvent({ dataEvent, mode }) {
               ShowNotify("Pengisian Form Salah.", notifyPosition.topCenter, notifyType.error)
             } else {
               ShowNotify(`Berhasil edit event!`, notifyPosition.topCenter, notifyType.success, () => {
-                // router.back()
+                router.back()
               })
             }
           }

@@ -2,9 +2,10 @@ import Head from 'next/head'
 import Router from 'next/router'
 import { useEffect } from 'react'
 import { AuthAPI } from '../api/AuthAPI'
+import withPrivateRoute from '../utils/withPrivateRoute'
 import FormLogin from './layouts/FormLogin'
 
-export default function Login() {
+function Login() {
   useEffect(()=>{
     if(AuthAPI.isAuthenticated()){
       Router.replace(`/dashboard`)
@@ -36,3 +37,5 @@ export default function Login() {
     </div>
   )
 }
+
+export default Login

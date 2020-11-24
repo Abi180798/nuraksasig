@@ -39,7 +39,7 @@ export default function SidebarAdmin({ title }) {
             <a className="nav-link collapsed" id="linkManaj" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
               onClick={e => setState(!state)}>
               <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                                Manajemen Data
+                                <span style={{cursor:"pointer"}}>Manajemen Data</span>
                                 <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
             </a>
             <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
