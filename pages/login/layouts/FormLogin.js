@@ -7,6 +7,8 @@ import { UserAPI } from '../../api/UserAPI'
 import { TOKEN,USER,ROLE } from '../../../utils/constants'
 import { ShowNotify, notifyPosition, notifyType } from '../../../utils/notification'
 import { useState } from 'react'
+import * as Yup from 'yup'
+
 export default function FormLogin() {
   const router = useRouter()
   const [state,setState] = useState({
@@ -23,6 +25,12 @@ export default function FormLogin() {
     <div>
     <Formik
       initialValues={{ username: '', password: '' }}
+      validationSchema = {
+        Yup.object({
+          username: Yup.string().required("Harus diisi"),
+          password: Yup.string().required("Harus diiisi")
+        })
+      }
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(async () => {
           setState({...state,loading:true})
