@@ -4,26 +4,26 @@ import { WisataAPI } from "../../api/WisataAPI";
 import Layout from "../../layouts/Layout";
 import Loading from "../../utils/Loading";
 import ListWisata from "./components/ListWisata";
-import withPrivateRoute from '../../utils/withPrivateRoute'
+import withPrivateRoute from "../../utils/withPrivateRoute";
 
 function WisataAdmin() {
-  const [state,setState] = useState({
-    loading:false
-  })
+  const [state, setState] = useState({
+    loading: false,
+  });
   const [wisatas, setWisatas] = useState({
-    data: null
-  })
+    data: null,
+  });
   async function getData() {
-    setState({...state,loading:true})
-    const rWisata = await WisataAPI.getListWisata()
+    setState({ ...state, loading: true });
+    const rWisata = await WisataAPI.getListWisata();
     setWisatas({
-      data: rWisata.data
-    })
-    setState({...state,loading:false})
+      data: rWisata.data,
+    });
+    setState({ ...state, loading: false });
   }
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
   return (
     <Layout title="Wisata">
       <main>
@@ -31,16 +31,18 @@ function WisataAdmin() {
           <h1 className="mt-4">Daftar Wisata</h1>
           <ol className="breadcrumb mb-4">
             <li className="breadcrumb-item">Manajemen Data</li>
-            <li className="breadcrumb-item active" aria-current="page">Wisata</li>
+            <li className="breadcrumb-item active" aria-current="page">
+              Wisata
+            </li>
           </ol>
-          {
-            wisatas.data&&<ListWisata wisatas={wisatas.data}/>
-          }
+          {wisatas.data && (
+            <ListWisata wisatas={wisatas.data} getData={getData} />
+          )}
         </div>
       </main>
-      {state.loading&&<Loading/>}
+      {state.loading && <Loading />}
     </Layout>
-  )
+  );
 }
 
-export default withPrivateRoute(WisataAdmin)
+export default withPrivateRoute(WisataAdmin);
