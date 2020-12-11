@@ -31,10 +31,10 @@ export default function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ml-auto my-2 my-lg-0">
                         <Link href="/maps">
-                        <li className="nav-item"><a className="nav-link js-scroll-trigger">Maps</a></li>
+                        <li className="nav-item"><a className="nav-link js-scroll-trigger" style={{cursor:"pointer"}}>Maps</a></li>
                         </Link>
                         <Link href="/aboutus">
-                        <li className="nav-item"><a className="nav-link js-scroll-trigger">About Us</a></li>
+                        <li className="nav-item"><a className="nav-link js-scroll-trigger" style={{cursor:"pointer"}}>About Us</a></li>
                         </Link>
                         {store.get(TOKEN) ?
                             <li className="nav-item"><Link href="/dashboard"><a className="nav-link js-scroll-trigger">Dashboard</a></Link></li>

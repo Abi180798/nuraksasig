@@ -5,6 +5,9 @@ import dataWisata from '../../../mock/wisata.json'
 import { useMediaQuery } from 'react-responsive'
 import Link from 'next/link';
 import { WisataAPI } from '../../api/WisataAPI';
+import fconfig from '../../../config/fconfig'
+
+const conf = fconfig.storage()
 
 export default function Content() {
   const isMobile = useMediaQuery({ query: '(max-width: 530px)' })
@@ -22,8 +25,20 @@ export default function Content() {
   })
   async function getData() {
     const r = await WisataAPI.getListWisata()
+    let resultingArr = []
+    try{
+      const arr = r.data.map((row)=>row.gambar_wisata)
+      var i;
+      for(i=0;i<arr.length;i++){
+        const d = await conf.ref("images").child(arr[i]).getDownloadURL()
+        resultingArr.push(d)
+      }
+    }catch(err){
+      console.log(err)
+    }
     setWisatas({
-      data: r.data
+      data:r.data,
+      url:resultingArr
     })
   }
 
@@ -99,7 +114,7 @@ export default function Content() {
 }
           <div className="card-body">
             <TahuraMaps cLocation={state.cLocation} pLocation={state.pLocation} 
-            dataFilter={state.dataFilter && {lat:wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === state.pLocation)[0].latitude, lng: wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === state.pLocation)[0].longitude}} />
+            dataFilter={state.dataFilter && {lat:wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === state.pLocation)[0].latitude, lng: wisatas.data && wisatas.data.filter((row) => row.id_wisata.toString() === state.pLocation)[0].longitude}} dataWisata={wisatas.data} dataWisataUrl={wisatas.url}/>
           </div>
         </div>
       </div>

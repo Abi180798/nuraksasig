@@ -47,19 +47,19 @@ export const TahuraMaps = (props) => {
       }
       onClick={onMapClicked}
     >
-      {dataWisata.data.map((row,index) => (
+      {props.dataWisata&&props.dataWisata.map((row,index) => (
         <Marker onClick={onMarkerClick} key={index}
           name={<div>
             <div style={{textAlign:"center"}}>
-              <img style={{height:150,width:150}} src='https://i.ibb.co/pWm832K/airterjunsegenter1.jpg'></img><br/>
+              <img style={{height:150,width:150}} src={row.gambar_wisata !== "" ? props.dataWisataUrl[index] : "../../../static/assets/img/imgnotfound.png"}></img><br/>
               </div>
             <b>Nama Wisata: {row.nama_wisata}</b><br />
             <b>Alamat: {row.alamat_wisata}</b><br />
-            <b>Latitude: {row.location.lat}</b><br />
-            <b>Longitude: {row.location.lng}</b>
+            <b>Latitude: {row.latitude}</b><br />
+            <b>Longitude: {row.longitude}</b>
           </div>} position={{
-            lat: row.location.lat,
-            lng: row.location.lng
+            lat: row.latitude,
+            lng: row.longitude
           }} />
       ))}
       {props.cLocation&&
