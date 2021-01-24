@@ -7,7 +7,7 @@ const CurrentLocation = (props) => {
     ) : !props.isGeolocationEnabled ? (
         <div >Geolocation is not enabled</div>
     ) : props.coords ? (
-        <div><button className="btn btn-primary w-100"
+        <div><button className="btn btn-primary w-100" type="button"
         onClick={e=>props.getLocation({lat:props.coords.latitude,lng:props.coords.longitude})}>
             Current Location</button><div><small>Location: {props.coords.latitude}, {props.coords.longitude}</small></div></div>
     ) : (
